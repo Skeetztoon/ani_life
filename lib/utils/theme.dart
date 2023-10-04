@@ -8,18 +8,18 @@ ThemeData basicTheme () => ThemeData(
   textTheme: const TextTheme(
       titleLarge: TextStyle(
         fontSize: LargeTextSize,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+        // fontWeight: FontWeight.bold,
+        // color: Colors.white,
       ),
       titleMedium: TextStyle(
         fontSize: MediumTextSize,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+        // fontWeight: FontWeight.bold,
+        // color: Colors.white,
       ),
       titleSmall: TextStyle(
         fontSize: SmallTextSize,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+        // fontWeight: FontWeight.bold,
+        // color: Colors.white,
       )
   ),
 
@@ -36,5 +36,5 @@ ThemeData basicTheme () => ThemeData(
         fontWeight: FontWeight.normal),
   ),
 
-  // scaffoldBackgroundColor: myBackgroundColor,
+  scaffoldBackgroundColor: myBackgroundColor,
 );
