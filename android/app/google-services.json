@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "693498604254",
+    "project_id": "anilife-f86d4",
+    "storage_bucket": "anilife-f86d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693498604254:android:73d4c3e6aa6804310ef04f",
+        "android_client_info": {
+          "package_name": "com.example.ani_life"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2DVJLhN6Wyu7uKVvknaMqGP9Nl9JomfY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

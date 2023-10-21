@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../components/my_text_field.dart';
-import '../utils/constants.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
@@ -26,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void signUp() async {
     if (passwordController.text != confirmPasswordController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Пароли не совпадают")),
+        const SnackBar(content: Text("Пароли не совпадают")),
       );
       return;
     }
@@ -119,7 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         text: "Регистрация",
                         onTap: signUp,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 15,
                       ),
                       Row(
@@ -132,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ?.copyWith(
                                       fontWeight: FontWeight.normal,
                                       color: Colors.black)),
-                          SizedBox(
+                          const SizedBox(
                             width: 4,
                           ),
                           GestureDetector(
