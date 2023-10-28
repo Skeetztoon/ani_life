@@ -1,3 +1,5 @@
+import 'package:ani_life/components/chipsCarousel.dart';
+import 'package:ani_life/components/myChipFilter.dart';
 import 'package:ani_life/components/my_map.dart';
 import 'package:ani_life/main.dart';
 import 'package:ani_life/services/auth/auth_service.dart';
@@ -19,6 +21,8 @@ class _HomePageState extends State<HomePage> {
     authService.signOut();
   }
 
+  bool isSelected = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +38,14 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body:  Center(
-        child: MyMap(),
+      body: Center(
+        child:
+        Stack(
+          children: <Widget>[
+            MyMap(),
+            ChipCarousel()
+          ],
+        ),
       ),
     );
   }
