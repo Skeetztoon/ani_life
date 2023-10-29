@@ -1,5 +1,6 @@
-import 'package:ani_life/pages/home_page.dart';
-import 'package:ani_life/pages/welcome_page.dart';
+import 'package:ani_life/pages/main_pages/map_page.dart';
+import 'package:ani_life/pages/login_registration/welcome_page.dart';
+import 'package:ani_life/pages/main_pages/init_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,8 @@ class AuthGate extends StatelessWidget {
         builder: (content, snapshot) {
           // is user logged in
           if (snapshot.hasData) {
-            return const HomePage();
+            // return const HomePage();
+            return const InitialPage();
           } else {
             return const WelcomePage();
           }

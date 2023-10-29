@@ -14,7 +14,7 @@ class _MyChipFilterState extends State<MyChipFilter> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 4),
       child: FilterChip(
         label: Text(widget.lbl),
         selected: isSelected,
@@ -23,6 +23,15 @@ class _MyChipFilterState extends State<MyChipFilter> {
             isSelected != isSelected;
           });
         },
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+          side: BorderSide(
+            color: Color(0xFFF39191),
+            width: 2.0,
+          ),
+        ),
+        // avatar: const Text("A"),
       ),
     );
   }

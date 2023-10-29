@@ -13,15 +13,24 @@ class _ChipCarouselState extends State<ChipCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: categories.length,
-          itemBuilder: (context, index) {
-            return MyChipFilter(
-              lbl: categories[index],
-            );
-          }),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: Row(
+        children: [
+          SizedBox(
+            height: 50,
+            width: MediaQuery. of(context). size. width,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: categories.length,
+                itemBuilder: (context, index) {
+                  return MyChipFilter(
+                    lbl: categories[index],
+                  );
+                }),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -1,5 +1,5 @@
-import 'package:ani_life/pages/login_page.dart';
-import 'package:ani_life/pages/register_page.dart';
+import 'package:ani_life/pages/login_registration/login_page.dart';
+import 'package:ani_life/pages/login_registration/register_page.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatefulWidget {

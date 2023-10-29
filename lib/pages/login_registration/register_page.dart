@@ -3,7 +3,7 @@ import 'package:ani_life/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../components/my_text_field.dart';
+import '../../components/my_text_field.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
