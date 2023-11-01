@@ -22,7 +22,7 @@ class MyTextField extends StatelessWidget {
           .titleMedium
           ?.copyWith(
           color: Colors.black,
-          fontWeight: FontWeight.normal),
+          fontWeight: FontWeight.normal,),
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,

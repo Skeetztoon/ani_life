@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../utils/constants.dart';
+import 'my_text_field.dart';
+
 class MySearchBar extends StatefulWidget {
   const MySearchBar({super.key});
 
@@ -8,40 +11,56 @@ class MySearchBar extends StatefulWidget {
 }
 
 class _MySearchBarState extends State<MySearchBar> {
+  final searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 100,
-        child: SearchAnchor(
-            builder: (BuildContext context, SearchController controller) {
-              return SearchBar(
-                controller: controller,
-                padding: const MaterialStatePropertyAll<EdgeInsets>(
-                    EdgeInsets.symmetric(horizontal: 16.0)),
-                onTap: () {
-                  controller.openView();
-                },
-                onChanged: (_) {
-                  controller.openView();
-                },
-                leading: const Icon(Icons.search),
-                // trailing:  Icon(Icons.search),
-              );
-            }, suggestionsBuilder:
-            (BuildContext context, SearchController controller) {
-          return List<ListTile>.generate(5, (int index) {
-            final String item = 'item $index';
-            return ListTile(
-              title: Text(item),
-              onTap: () {
-                setState(() {
-                  controller.closeView(item);
-                });
-              },
-            );
-          });
-        }),
-      );
-
+    return Container(
+      color: Colors.white,
+      height: 60,
+      width: MediaQuery. of(context). size. width,
+      child: SizedBox(
+        // height: 20,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                // width: (MediaQuery. of(context). size. width),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: TextField(
+                    controller: searchController,
+                    obscureText: false,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.black, fontWeight: FontWeight.normal,),
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        filled: true,
+                        fillColor: Color(0xFFFDE7DD),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide(color: Color(0xFFFDE7DD))),
+                        hintText: "Поиск",
+                        hintStyle: Theme.of(context)
+                            .inputDecorationTheme
+                            .hintStyle
+                            ?.copyWith(fontWeight: FontWeight.bold)),
+                  ),
+                ),
+              ),
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.filter_alt_outlined,
+                    color: AniColorPrimary,
+                    size: 40,
+                  ))
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

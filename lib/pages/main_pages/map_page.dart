@@ -52,6 +52,7 @@ class _MapPageState extends State<MapPage> {
           children: <Widget>[
             MySearchBar(),
             MyMap(),
+            Positioned(top: 0, child: MySearchBar()),
             Positioned(bottom: 0, child: ChipCarousel()),
           ],
         ),

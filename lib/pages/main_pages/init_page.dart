@@ -1,4 +1,5 @@
 import 'package:ani_life/pages/main_pages/profile_page.dart';
+import 'package:ani_life/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'map_page.dart';
@@ -31,8 +32,8 @@ class _InitialPageState extends State<InitialPage> {
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        selectedItemColor: Color(0xFF964949),
-        unselectedItemColor: Color(0xFFF39191),
+        selectedItemColor: AniColorDark,
+        unselectedItemColor: AniColorLight,
         onTap: _navigateBottomBar,
         currentIndex: _currentIndex,
         items: [
