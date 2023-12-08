@@ -1,3 +1,4 @@
+import 'package:ani_life/components/filters_page.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/constants.dart';
@@ -51,7 +52,12 @@ class _MySearchBarState extends State<MySearchBar> {
                 ),
               ),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const FiltersPage()),
+                    );
+                  },
                   icon: Icon(
                     Icons.filter_alt_outlined,
                     color: AniColorPrimary,

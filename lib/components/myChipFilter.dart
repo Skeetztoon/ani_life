@@ -9,7 +9,7 @@ class MyChipFilter extends StatefulWidget {
 }
 
 class _MyChipFilterState extends State<MyChipFilter> {
-  bool isSelected = false;
+  bool isSelected = true;
 
   @override
   Widget build(BuildContext context) {
