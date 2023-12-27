@@ -9,9 +9,14 @@ class MyMap extends StatefulWidget {
   State<MyMap> createState() => _MyMapState();
 }
 
-
-
 class _MyMapState extends State<MyMap> {
+  MapController mapController = MapController();
+
+  // void _onMapCreated(MapController controller) {
+  //   mapController = controller;
+  // }
+
+
 
   List<List<double>> points = [
     [55.751244, 37.618423],
@@ -33,19 +38,21 @@ class _MyMapState extends State<MyMap> {
 
   @override
   Widget build(BuildContext context) {
-    return FlutterMap(
-      options: MapOptions(
-        initialCenter: LatLng(55.751244, 37.618423),
-        initialZoom: 9.2,
-      ),
-      children: [
-        TileLayer(
-          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-          userAgentPackageName: 'com.example.app',
+    return Stack(
+      children: [FlutterMap(
+        mapController: mapController,
+        options: MapOptions(
+          initialCenter: LatLng(55.751244, 37.618423),
+          initialZoom: 9.2,
         ),
-        MarkerLayer(
-          markers:
-            myMarkers(points)
+        children: [
+          TileLayer(
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            userAgentPackageName: 'com.example.app',
+          ),
+          MarkerLayer(
+              markers:
+              myMarkers(points)
             // Marker(
             //   point: LatLng(55.751244, 37.618423),
             //   width: 30,
@@ -53,16 +60,63 @@ class _MyMapState extends State<MyMap> {
             //   child: FlutterLogo(),
             // ),
 
+          ),
+        ],
+      ),
+        Positioned(
+          bottom: 300,
+          right: 10,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Material(
+                type: MaterialType.transparency,
+                child: Ink(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10.0)), //<-- SEE HERE
+                  child: InkWell(
+                    onTap: () async {
+                      var currentZoomLevel = await mapController.zoom;
+                      currentZoomLevel += 0.5;
+                      if (currentZoomLevel < 0) currentZoomLevel = 0;
+                      mapController.move(mapController.center, currentZoomLevel);
+                    },
+                    child: Icon(
+                      Icons.add,
+                      size: 40.0,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              ),
+              Material(
+                type: MaterialType.transparency,
+                child: Ink(
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10.0)), //<-- SEE HERE
+                  child: InkWell(
+                    onTap: () async {
+                      var currentZoomLevel = await mapController.zoom;
+                      currentZoomLevel -= 0.5;
+                      if (currentZoomLevel < 0) currentZoomLevel = 0;
+                      mapController.move(mapController.center, currentZoomLevel);
+                    },
+                    child: Icon(
+                        Icons.remove,
+                        size: 40.0,
+                        color: Colors.grey,
+                      ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
-        // RichAttributionWidget(
-        //   attributions: [
-        //     TextSourceAttribution(
-        //       'OpenStreetMap contributors',
-        //       onTap: () => launchUrl(Uri.parse('https://openstreetmap.org/copyright')),
-        //     ),
-        //   ],
-        // ),
-      ],
+      ]
     );
   }
 }

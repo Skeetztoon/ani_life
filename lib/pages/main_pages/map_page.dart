@@ -1,11 +1,11 @@
 import 'package:ani_life/components/chipsCarousel.dart';
-import 'package:ani_life/components/myChipFilter.dart';
 import 'package:ani_life/components/my_map.dart';
 import 'package:ani_life/components/my_searchbar.dart';
 import 'package:ani_life/main.dart';
 import 'package:ani_life/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -26,6 +26,7 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -46,14 +47,13 @@ class _MapPageState extends State<MapPage> {
           ),
         ],
       ),
-      body: const Center(
+      body: Center(
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: <Widget>[
-            MySearchBar(),
             MyMap(),
             Positioned(top: 0, child: MySearchBar()),
-            Positioned(bottom: 0, child: ChipCarousel()),
+            Positioned(bottom: 0, child: SizedBox(height: 60, width: width, child: ChipCarousel())),
           ],
         ),
       ),
