@@ -1,25 +1,28 @@
 import 'package:ani_life/firebase_options.dart';
 import 'package:ani_life/services/auth/auth_gate.dart';
-import 'package:ani_life/services/auth/auth_service.dart';
 import 'package:ani_life/utils/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider/provider.dart';
-import 'pages/login_registration/welcome_page.dart';
+import 'pages/login_registration/error_Screen.dart';
+import 'pages/login_registration/loading_Screen.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+final firebaseinitializerProvider = FutureProvider<FirebaseApp>((ref) async {
+  return await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+});
+
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final initialize = ref.watch(firebaseinitializerProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AniLife',
@@ -28,7 +31,12 @@ class MyApp extends StatelessWidget {
       //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       //   useMaterial3: true,
       // ),
-      home: AuthGate(),
+      home: initialize.when(
+          data: (data) {
+            return const AuthGate();
+          },
+          loading: () => const LoadingScreen(),
+          error: (e, stackTrace) => ErrorScreen(e, stackTrace)),
     );
   }
 }

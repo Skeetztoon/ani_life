@@ -1,9 +1,9 @@
 import 'package:ani_life/components/my_button.dart';
-import 'package:ani_life/services/auth/auth_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../components/my_text_field.dart';
+import '../../services/auth/auth_provider.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
@@ -15,34 +15,34 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   //text controllers
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
-  final usernameController = TextEditingController();
-  final petNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _petNameController = TextEditingController();
 
   //sing up user
-  void signUp() async {
-    if (passwordController.text != confirmPasswordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Пароли не совпадают")),
-      );
-      return;
-    }
-
-    // get auth service
-    final authService = Provider.of<AuthService>(context, listen: false);
-    try {
-      await authService.signUpWithEmailAndPassword(
-          emailController.text, passwordController.text);
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
-        ),
-      );
-    }
-  }
+  // void signUp() async {
+  //   if (_passwordController.text != _confirmPasswordController.text) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(content: Text("Пароли не совпадают")),
+  //     );
+  //     return;
+  //   }
+  //
+  //   // get auth service
+  //   final authService = Provider.of<AuthService>(context, listen: false);
+  //   try {
+  //     await authService.signUpWithEmailAndPassword(
+  //         _emailController.text, _passwordController.text);
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text(e.toString()),
+  //       ),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(
                           width: 320,
                           child: MyTextField(
-                            controller: usernameController,
+                            controller: _usernameController,
                             hintText: "Имя пользователя",
                             obscureText: false,
                           )),
@@ -77,7 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(
                           width: 320,
                           child: MyTextField(
-                            controller: emailController,
+                            controller: _emailController,
                             hintText: "Email",
                             obscureText: false,
                           )),
@@ -87,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(
                           width: 320,
                           child: MyTextField(
-                            controller: passwordController,
+                            controller: _passwordController,
                             hintText: "Пароль",
                             obscureText: true,
                           )),
@@ -97,7 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(
                           width: 320,
                           child: MyTextField(
-                            controller: confirmPasswordController,
+                            controller: _confirmPasswordController,
                             hintText: "Повторите пароль",
                             obscureText: true,
                           )),
@@ -107,17 +107,37 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(
                           width: 320,
                           child: MyTextField(
-                            controller: petNameController,
+                            controller: _petNameController,
                             hintText: "Кличка питомца",
                             obscureText: false,
                           )),
                       const SizedBox(
                         height: 20,
                       ),
-                      MyButton(
-                        text: "Регистрация",
-                        onTap: signUp,
-                      ),
+                      Consumer(builder: (context, ref, _) {
+                        final auth = ref.watch(authenticationProvider);
+
+                        Future<void> _signUp() async {
+                          if (_passwordController.text !=
+                              _confirmPasswordController.text) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text("Пароли не совпадают")),
+                            );
+                            return;
+                          }
+                          await auth.signUpWithEmailAndPassword(
+                              _emailController.text,
+                              _passwordController.text,
+                              _usernameController.text,
+                              _petNameController.text,
+                              context);
+                        }
+                        return MyButton(
+                          text: "Регистрация",
+                          onTap: _signUp,
+                        );
+                      }),
                       const SizedBox(
                         height: 15,
                       ),

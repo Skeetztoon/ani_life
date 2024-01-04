@@ -1,8 +1,9 @@
 import 'package:ani_life/components/my_button.dart';
 import 'package:ani_life/components/my_text_field.dart';
-import 'package:ani_life/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../services/auth/auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
@@ -14,25 +15,25 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   // text controllers
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   //sign in user
-  void signIn() async {
-    //get the auth service
-    final authService = Provider.of<AuthService>(context, listen: false);
-
-    try {
-      await authService.signInWithEmailAndPassword(
-          emailController.text, passwordController.text);
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(e.toString()),
-        ),
-      );
-    }
-  }
+  // void signIn() async {
+  //   //get the auth service
+  //   final authService = Provider.of<AuthService>(context, listen: false);
+  //
+  //   try {
+  //     await authService.signInWithEmailAndPassword(
+  //         _emailController.text, _passwordController.text);
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text(e.toString()),
+  //       ),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   const Icon(
-                    Icons.accessible_forward,
+                    Icons.flutter_dash,
                     size: 150,
                   ),
                   Column(
@@ -60,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                           width: 320,
                           child: MyTextField(
-                            controller: emailController,
+                            controller: _emailController,
                             hintText: "Email",
                             obscureText: false,
                           )),
@@ -68,13 +69,21 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                           width: 320,
                           child: MyTextField(
-                              controller: passwordController,
+                              controller: _passwordController,
                               hintText: "Пароль",
                               obscureText: true)),
                       const SizedBox(height: 20),
-                      MyButton(
-                        text: "Войти",
-                        onTap: signIn,
+                      Consumer(builder: (context, ref, _) {
+                        final auth = ref.watch(authenticationProvider);
+
+                        Future<void> _signIn() async {
+                          await auth
+                              .signInWithEmailAndPassword(_emailController.text, _passwordController.text, context);
+                        }
+                        return MyButton(
+                          text: "Войти",
+                          onTap: _signIn,
+                        );}
                       ),
                       SizedBox(
                         height: 15,

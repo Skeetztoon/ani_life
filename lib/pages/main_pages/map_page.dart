@@ -1,10 +1,7 @@
 import 'package:ani_life/components/chipsCarousel.dart';
 import 'package:ani_life/components/my_map.dart';
 import 'package:ani_life/components/my_searchbar.dart';
-import 'package:ani_life/main.dart';
-import 'package:ani_life/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 
 class MapPage extends StatefulWidget {
@@ -16,11 +13,11 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   //sign user out
-  void signOut() {
-    // get auth service
-    final authService = Provider.of<AuthService>(context, listen: false);
-    authService.signOut();
-  }
+  // void signOut() {
+  //   // get auth service
+  //   final authService = Provider.of<AuthService>(context, listen: false);
+  //   authService.signOut();
+  // }
 
   bool isSelected = false;
 
@@ -36,16 +33,6 @@ class _MapPageState extends State<MapPage> {
                 .textTheme
                 .titleLarge
                 ?.copyWith(color: Colors.black)),
-        actions: [
-          IconButton(
-            onPressed: signOut,
-            icon: const Icon(
-              Icons.logout,
-              size: 35,
-              color: Colors.black,
-            ),
-          ),
-        ],
       ),
       body: Center(
         child: Stack(
