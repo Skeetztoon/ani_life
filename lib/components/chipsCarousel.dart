@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Category model
 class Category {
   final String id;
   final String categoryName;
-  bool selected;
+  final bool selected;
 
   Category(this.id, this.categoryName, this.selected);
 }
 
+final categoryNotifierProvider =
+    StateNotifierProvider.family<CategoryNotifier, Category, Category>(
+        (ref, categoryId) => CategoryNotifier(categoryId));
+
 class CategoryNotifier extends StateNotifier<Category> {
   CategoryNotifier(Category category)
-      : super(Category(category.id, category.categoryName, false));
+      : super(Category(category.id, category.categoryName, category.selected));
 
   void toggleSelected() {
     state = Category(
@@ -22,9 +27,6 @@ class CategoryNotifier extends StateNotifier<Category> {
   }
 }
 
-final itemProvider =
-    StateNotifierProvider.family<CategoryNotifier, Category, Category>(
-        (ref, category) => CategoryNotifier(category));
 
 final List<Category> categoryList = [
   Category("Магазины", "stores", false),
@@ -35,7 +37,7 @@ final List<Category> categoryList = [
 ];
 
 class ChipCarousel extends StatelessWidget {
-  ChipCarousel({super.key});
+  const ChipCarousel({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,27 +48,76 @@ class ChipCarousel extends StatelessWidget {
             itemCount: categoryList.length,
             itemBuilder: (context, index) {
               return Consumer(builder: (context, ref, child) {
-                final item = ref.watch(itemProvider(categoryList[index]));
+                final item =
+                    ref.watch(categoryNotifierProvider(categoryList[index]));
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: FilterChip(
-                    label: Text(item.id),
-                    selected: item.selected,
-                    onSelected: (bool value) => ref
-                        .read(itemProvider(categoryList[index]).notifier)
-                        .toggleSelected(),
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      side: BorderSide(
-                        color: Color(0xFFF39191),
-                        width: 2.0,
+                  child: Column(
+                    children: [
+                      Text(item.categoryName),
+                      Text(item.selected.toString()),
+                      FilterChip(
+                        label: Text(item.id),
+                        selected: item.selected,
+                        onSelected: (bool value) {
+                          ref
+                            .read(categoryNotifierProvider(categoryList[index])
+                                .notifier)
+                            .toggleSelected();
+                          if (value) {
+                            ref
+                                .read(categoryListStateNotifierProvider.notifier)
+                                .addCategory(item.categoryName);
+                          } else {
+                            ref
+                                .read(categoryListStateNotifierProvider.notifier)
+                                .removeCategory(item.categoryName);
+                          }
+                        },
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          side: BorderSide(
+                            color: Color(0xFFF39191),
+                            width: 2.0,
+                          ),
+                        ),
+                        // avatar: const Text("A"),
                       ),
-                    ),
-                    // avatar: const Text("A"),
+                    ],
                   ),
                 );
               });
             }));
+  }
+}
+
+final categoryListStateNotifierProvider =
+    StateNotifierProvider<CategoryListStateNotifier, Set<String>>(
+        (ref) => CategoryListStateNotifier());
+
+class CategoryListStateNotifier extends StateNotifier<Set<String>> {
+  CategoryListStateNotifier() : super({});
+
+  void addCategory(String category) {
+    state = {...state, category};
+  }
+
+  void removeCategory(String category) {
+    state = state..removeWhere((item) => item == category);
+  }
+}
+
+class SelectedCategories extends ConsumerWidget {
+  const SelectedCategories({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final categoryList = ref.watch(categoryListStateNotifierProvider);
+    return Column(
+      children: [
+        ...categoryList.map((item) => Text(item)),
+      ],
+    );
   }
 }

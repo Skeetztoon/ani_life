@@ -1,7 +1,9 @@
 import 'package:ani_life/components/chipsCarousel.dart';
+import 'package:ani_life/components/fetch_categories.dart';
 import 'package:ani_life/components/my_map.dart';
 import 'package:ani_life/components/my_searchbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 class MapPage extends StatefulWidget {
@@ -39,8 +41,10 @@ class _MapPageState extends State<MapPage> {
           alignment: AlignmentDirectional.center,
           children: <Widget>[
             MyMap(),
-            Positioned(top: 0, child: MySearchBar()),
-            Positioned(bottom: 0, child: SizedBox(height: 60, width: width, child: ChipCarousel())),
+            // SelectedCategories(),
+            FetchCategories(),
+            // Positioned(top: 0, child: MySearchBar()),
+            Positioned(bottom: 0, child: SizedBox(height: 100, width: width, child: ChipCarousel())),
           ],
         ),
       ),

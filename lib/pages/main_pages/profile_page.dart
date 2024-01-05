@@ -15,24 +15,24 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late DocumentSnapshot userDocument;
-
-  Future<void> getCurrentUserDocument() async {
-    final User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      userDocument = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .get();
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getCurrentUserDocument();
-  }
-
+  // late DocumentSnapshot userDocument;
+  //
+  // Future<void> getCurrentUserDocument() async {
+  //   final User? user = FirebaseAuth.instance.currentUser;
+  //   if (user != null) {
+  //     userDocument = await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(user.uid)
+  //         .get();
+  //   }
+  // }
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   getCurrentUserDocument();
+  // }
+  //
   // Future setProfilePicture() async {
   //   final _selectedPicture = await ImagePicker().pickImage(source: ImageSource.gallery);
   // }
@@ -74,20 +74,20 @@ class _ProfilePageState extends State<ProfilePage> {
                 size: 120,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Аккаунт: ${(userDocument['username'].toString())}',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Питомец: ${(userDocument['petname'].toString())}',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Text(
+            //     'Аккаунт: ${(userDocument['username'].toString())}',
+            //     style: Theme.of(context).textTheme.titleMedium,
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Text(
+            //     'Питомец: ${(userDocument['petname'].toString())}',
+            //     style: Theme.of(context).textTheme.titleMedium,
+            //   ),
+            // ),
           ],
         ),
       ),
