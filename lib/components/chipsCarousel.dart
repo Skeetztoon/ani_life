@@ -108,6 +108,33 @@ class CategoryListStateNotifier extends StateNotifier<Set<String>> {
   }
 }
 
+// class CategoryListStateNotifier extends StateNotifier<Set<String>> {
+//   CategoryListStateNotifier() : super({});
+//
+//   void toggleCategory(Category category) {
+//     if (state.contains(category.categoryName)) {
+//       state = state..remove(category.categoryName);
+//     } else {
+//       state = {...state, category.categoryName};
+//     }
+//   }
+//
+//   void addCategory(String category) {
+//     state = {...state, category};
+//   }
+//
+//   void removeCategory(String category) {
+//     state = state..removeWhere((item) => item == category);
+//   }
+// }
+
+
+// onSelected: (bool value) {
+// ref.read(categoryListStateNotifierProvider.notifier).toggleCategory(item);
+// },
+
+
+
 class SelectedCategories extends ConsumerWidget {
   const SelectedCategories({super.key});
 
