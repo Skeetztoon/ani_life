@@ -52,39 +52,34 @@ class ChipCarousel extends StatelessWidget {
                     ref.watch(categoryNotifierProvider(categoryList[index]));
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: Column(
-                    children: [
-                      Text(item.categoryName),
-                      Text(item.selected.toString()),
-                      FilterChip(
-                        label: Text(item.id),
-                        selected: item.selected,
-                        onSelected: (bool value) {
-                          ref
-                            .read(categoryNotifierProvider(categoryList[index])
-                                .notifier)
-                            .toggleSelected();
-                          if (value) {
-                            ref
-                                .read(categoryListStateNotifierProvider.notifier)
-                                .addCategory(item.categoryName);
-                          } else {
-                            ref
-                                .read(categoryListStateNotifierProvider.notifier)
-                                .removeCategory(item.categoryName);
-                          }
-                        },
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          side: BorderSide(
-                            color: Color(0xFFF39191),
-                            width: 2.0,
-                          ),
-                        ),
-                        // avatar: const Text("A"),
+                  child: FilterChip(
+                    label: Text(item.id,),
+                    selected: item.selected,
+                    onSelected: (bool value) {
+                      ref
+                        .read(categoryNotifierProvider(categoryList[index])
+                            .notifier)
+                        .toggleSelected();
+                      if (value) {
+                        ref
+                            .read(categoryListStateNotifierProvider.notifier)
+                            .addCategory(item.categoryName);
+                      } else {
+                        ref
+                            .read(categoryListStateNotifierProvider.notifier)
+                            .removeCategory(item.categoryName);
+                      }
+                    },
+                    selectedColor: Colors.grey.shade200,
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                      side: BorderSide(
+                        color: Color(0xFFF39191),
+                        width: 2.0,
                       ),
-                    ],
+                    ),
+                    // avatar: const Text("A"),
                   ),
                 );
               });
@@ -104,36 +99,9 @@ class CategoryListStateNotifier extends StateNotifier<Set<String>> {
   }
 
   void removeCategory(String category) {
-    state = state..removeWhere((item) => item == category);
+    state = state.where((item) => item != category).toSet();
   }
 }
-
-// class CategoryListStateNotifier extends StateNotifier<Set<String>> {
-//   CategoryListStateNotifier() : super({});
-//
-//   void toggleCategory(Category category) {
-//     if (state.contains(category.categoryName)) {
-//       state = state..remove(category.categoryName);
-//     } else {
-//       state = {...state, category.categoryName};
-//     }
-//   }
-//
-//   void addCategory(String category) {
-//     state = {...state, category};
-//   }
-//
-//   void removeCategory(String category) {
-//     state = state..removeWhere((item) => item == category);
-//   }
-// }
-
-
-// onSelected: (bool value) {
-// ref.read(categoryListStateNotifierProvider.notifier).toggleCategory(item);
-// },
-
-
 
 class SelectedCategories extends ConsumerWidget {
   const SelectedCategories({super.key});

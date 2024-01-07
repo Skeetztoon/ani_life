@@ -41,10 +41,10 @@ class _MapPageState extends State<MapPage> {
           alignment: AlignmentDirectional.center,
           children: <Widget>[
             MyMap(),
-            SelectedCategories(),
+            // SelectedCategories(),
             // FetchCategories(),
-            // Positioned(top: 0, child: MySearchBar()),
-            Positioned(bottom: 0, child: SizedBox(height: 100, width: width, child: ChipCarousel())),
+            Positioned(top: 0, child: MySearchBar()),
+            Positioned(bottom: 0, child: SizedBox(height: 50, width: width, child: ChipCarousel())),
           ],
         ),
       ),
