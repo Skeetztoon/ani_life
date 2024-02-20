@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../components/profile/profile_settings.dart';
 import '../../services/auth/auth_provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -67,6 +68,37 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Center(
         child: Column(
           children: [
+            Container(
+              height: MediaQuery.of(context).size.width,
+              color: Colors.blue,
+            ),
+            Container(
+              padding: EdgeInsets.all(20),
+              color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Иван Иванов, 25 лет",
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(color: Colors.black),
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.info_outline,
+                        size: 25,
+                      ),
+                      Text("Подробнее", style: Theme.of(context)
+                          .textTheme
+                          .titleSmall),
+                    ],
+                  ),
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Icon(
@@ -101,46 +133,6 @@ class _ProfilePageState extends State<ProfilePage> {
         foregroundColor: AniColorPrimary,
         backgroundColor: Colors.white,
         child: const Icon(Icons.settings),
-      ),
-    );
-  }
-}
-
-class AccountSettings extends StatefulWidget {
-  const AccountSettings({super.key});
-
-  @override
-  State<AccountSettings> createState() => _AccountSettingsState();
-}
-
-class _AccountSettingsState extends State<AccountSettings> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, size:35, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        automaticallyImplyLeading: false,
-        elevation: 0,
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: Text("Настройки",
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge
-                ?.copyWith(color: Colors.black)),
-      ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            TextButton(
-              onPressed: () {},
-              child: Text("Поменять фото"),
-            )
-          ],
-        ),
       ),
     );
   }

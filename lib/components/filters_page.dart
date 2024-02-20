@@ -35,8 +35,8 @@ class _FiltersPageState extends State<FiltersPage> {
             Wrap(
               children: [
                 MyChipFilter(lbl: "Груминг"),
-                MyChipFilter(lbl: "Кинологические центры"),
                 MyChipFilter(lbl: "Ветклиника"),
+                MyChipFilter(lbl: "Кинологические центры"),
               ],
             ),
             SizedBox(

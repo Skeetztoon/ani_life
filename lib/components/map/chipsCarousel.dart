@@ -27,7 +27,7 @@ class CategoryNotifier extends StateNotifier<Category> {
   }
 }
 
-
+// список кнопок категорий
 final List<Category> categoryList = [
   Category("Магазины", "stores", false),
   Category("Клиники", "vets", false),
@@ -42,7 +42,7 @@ class ChipCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        padding: const EdgeInsets.symmetric(vertical: 5),
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: categoryList.length,

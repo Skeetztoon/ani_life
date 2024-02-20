@@ -6,8 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'chipsCarousel.dart';
 import 'fetch_categories.dart';
-import 'map/placeMarkerWidget.dart';
-import 'map/place_model.dart';
+import 'placeBottomSheet.dart';
+import 'place_model.dart';
 
 // List<List<double>> points = [
 //   [55.751244, 37.618423],
@@ -27,7 +27,7 @@ import 'map/place_model.dart';
 //   return myMarkersList;
 // }
 
-List<Marker> myMarkers(List<Place> placesList) {
+List<Marker> myMarkers(List<Place> placesList) { // конвертим из списка мест в список координат
   List<Marker> myMarkersList = [];
   for (var i = 0; i < placesList.length; i++) {
     double lat = placesList[i].coords[0];
@@ -36,7 +36,7 @@ List<Marker> myMarkers(List<Place> placesList) {
       point: LatLng(lat, lon),
       width: 50,
       height: 50,
-      child: PlaceMarkerWidget(
+      child: PlaceBottomSheet(
         placeName: placesList[i].name,
         schedule: placesList[i].schedule,
         address: placesList[i].place,
@@ -60,7 +60,7 @@ class _MyMapState extends ConsumerState<MyMap> {
   Widget build(BuildContext context) {
     final categoryList = ref.watch(categoryListStateNotifierProvider);
     return Stack(children: [
-      FlutterMap(
+      FlutterMap(                                         // карта
         mapController: mapController,
         options: const MapOptions(
           initialCenter: LatLng(55.751244, 37.618423),
@@ -84,9 +84,9 @@ class _MyMapState extends ConsumerState<MyMap> {
               // spiderfySpiralDistanceMultiplier: 2,
               // spiderfyCircleRadius: 20,
               markers: ref
-                  .watch(selectedCategoriesDataProvider(categoryList))
+                  .watch(selectedCategoriesDataProvider(categoryList)) // берем из провайдера список
                   .when(
-                      data: (data) => myMarkers(data),
+                      data: (data) => myMarkers(data), // получаем лист маркеров
                       error: (_, __) => [],
                       loading: () => []),
               builder: (context, markers) {
@@ -106,7 +106,7 @@ class _MyMapState extends ConsumerState<MyMap> {
           ),
         ],
       ),
-      Positioned(
+      Positioned(                                                 // кнопки зума
         bottom: 300,
         right: 10,
         child: Column(
@@ -116,9 +116,10 @@ class _MyMapState extends ConsumerState<MyMap> {
               type: MaterialType.transparency,
               child: Ink(
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.grey.shade400, width: 1.5),
-                    borderRadius: BorderRadius.circular(10.0)), //<-- SEE HERE
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey.shade400, width: 1.5),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
                 child: InkWell(
                   onTap: () async {
                     var currentZoomLevel = await mapController.zoom;
@@ -134,14 +135,17 @@ class _MyMapState extends ConsumerState<MyMap> {
                 ),
               ),
             ),
-            const SizedBox(height: 2,),
+            const SizedBox(
+              height: 2,
+            ),
             Material(
               type: MaterialType.transparency,
               child: Ink(
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.grey.shade400, width: 1.5),
-                    borderRadius: BorderRadius.circular(10.0)), //<-- SEE HERE
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey.shade400, width: 1.5),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
                 child: InkWell(
                   onTap: () async {
                     var currentZoomLevel = await mapController.zoom;

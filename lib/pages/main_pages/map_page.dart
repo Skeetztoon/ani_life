@@ -1,10 +1,9 @@
-import 'package:ani_life/components/chipsCarousel.dart';
-import 'package:ani_life/components/fetch_categories.dart';
-import 'package:ani_life/components/my_map.dart';
+import 'package:ani_life/components/map/chipsCarousel.dart';
+import 'package:ani_life/components/map/fetch_categories.dart';
+import 'package:ani_life/components/map/my_map.dart';
 import 'package:ani_life/components/my_searchbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -44,7 +43,14 @@ class _MapPageState extends State<MapPage> {
             // SelectedCategories(),
             // FetchCategories(),
             Positioned(top: 0, child: MySearchBar()),
-            Positioned(bottom: 0, child: SizedBox(height: 50, width: width, child: ChipCarousel())),
+            Positioned(
+              bottom: 0,
+              child: SizedBox(
+                height: 50,
+                width: width,
+                child: const ChipCarousel(),
+              ),
+            ),
           ],
         ),
       ),

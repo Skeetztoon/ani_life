@@ -1,12 +1,11 @@
-import 'package:bottom_drawer/bottom_drawer.dart';
 import 'package:flutter/material.dart';
 
-class PlaceMarkerWidget extends StatelessWidget {
+class PlaceBottomSheet extends StatelessWidget {
   final String placeName;
   final String schedule;
   final String address;
 
-  const PlaceMarkerWidget(
+  const PlaceBottomSheet(
       {super.key,
       required this.placeName,
       required this.schedule,
@@ -45,17 +44,7 @@ class PlaceMarkerWidget extends StatelessWidget {
                   ],),
                 );
               });
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(
-          //     content: Text(
-          //         "$placeName \nГрафик работы: $schedule \n Адрес: $address"),
-          //   ),
-          // );
         },
         icon: FlutterLogo());
   }
-  //
-  // Widget _bottomDrawer(BuildContext context) {
-  //   return BottomDrawer(header: Container(), body: Container(), headerHeight: 60.0, drawerHeight: 180.0, controller: _controller,);
-  // }
 }

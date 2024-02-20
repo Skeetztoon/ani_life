@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'chipsCarousel.dart';
-import 'map/place_model.dart';
+import 'place_model.dart';
 
 // fetching specific category
 final categoryDataProvider = FutureProvider.autoDispose.family<List<Place>, String>((ref, categoryName) async {

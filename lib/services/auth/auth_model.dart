@@ -11,18 +11,6 @@ class Authentication {
   //  It will be used to check if the user is logged in or not.
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
-  // Now This Class Contains 3 Functions currently
-  // 1. signInWithGoogle
-  // 2. signOut
-  // 3. signInwithEmailAndPassword
-
-  //  All these functions are async because this involves a future.
-  //  if async keyword is not used, it will throw an error.
-  //  to know more about futures, check out the documentation.
-  //  https://dart.dev/codelabs/async-await
-  //  Read this to know more about futures.
-  //  Trust me it will really clear all your concepts about futures
-
   //  SigIn the user using Email and Password
   Future<void> signInWithEmailAndPassword(
       String email, String password, BuildContext context) async {
@@ -76,9 +64,7 @@ class Authentication {
                   ]));
     } catch (e) {
       if (e == 'email-already-in-use') {
-        // print('Email already in use.');
       } else {
-        // print('Error: $e');
       }
     }
   }
