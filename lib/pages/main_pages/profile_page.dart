@@ -1,3 +1,4 @@
+import 'package:ani_life/components/profile/profileDetails.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,6 +17,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
   // late DocumentSnapshot userDocument;
   //
   // Future<void> getCurrentUserDocument() async {
@@ -72,33 +74,7 @@ class _ProfilePageState extends State<ProfilePage> {
               height: MediaQuery.of(context).size.width,
               color: Colors.blue,
             ),
-            Container(
-              padding: EdgeInsets.all(20),
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Иван Иванов, 25 лет",
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(color: Colors.black),
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.info_outline,
-                        size: 25,
-                      ),
-                      Text("Подробнее", style: Theme.of(context)
-                          .textTheme
-                          .titleSmall),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            ProfileDetails(),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Icon(

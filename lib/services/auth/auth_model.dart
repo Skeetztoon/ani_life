@@ -36,6 +36,7 @@ class Authentication {
   }
 
   // SignUp the user using Email and Password
+  //TODO Регистрация и создание пользователя
   Future<void> signUpWithEmailAndPassword(
       String email, String password, String username, String petname, BuildContext context) async {
     try {
@@ -43,10 +44,11 @@ class Authentication {
         email: email.trim(),
         password: password,
       );
-      _firestore.collection('users').doc(userCredential.user!.uid).set({
+      _firestore.collection('users').doc(userCredential.user!.email).set({
         'username': username,
         'email': userCredential.user!.email,
         'petname': petname,
+        'bio': "",
         'createdOn': DateTime.now(),
       });
     } on FirebaseAuthException catch (e) {

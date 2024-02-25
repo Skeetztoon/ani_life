@@ -1,5 +1,4 @@
 import 'package:ani_life/components/my_button.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../components/my_text_field.dart';
