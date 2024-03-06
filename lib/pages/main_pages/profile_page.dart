@@ -1,13 +1,12 @@
+import 'package:ani_life/components/profile/credentials/profileDetails.dart';
 import 'package:ani_life/components/profile/pets/pets_list.dart';
-import 'package:ani_life/components/profile/profileDetails.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 
-import '../../components/profile/profile_settings.dart';
+import '../../components/profile/credentials/profile_settings.dart';
 import '../../services/auth/auth_provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -18,7 +17,6 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-
   // late DocumentSnapshot userDocument;
   //
   // Future<void> getCurrentUserDocument() async {
@@ -68,30 +66,70 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ],
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.width,
-                color: Colors.blue,
-              ),
+      // body: Center(
+      //   child: SingleChildScrollView(
+      //     child: Column(
+      //       children: [
+      //         Container(
+      //           height: MediaQuery.of(context).size.width,
+      //           color: Colors.blue,
+      //         ),
+      //         ProfileDetails(),
+      //         PetsList(),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => const AccountSettings()),
+      //     );
+      //   },
+      //   foregroundColor: AniColorPrimary,
+      //   backgroundColor: Colors.white,
+      //   child: const Icon(Icons.settings),
+      // ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: false,
+            floating: false,
+            expandedHeight: MediaQuery.of(context).size.width,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Stack(fit: StackFit.expand, children: [
+                const ColoredBox(
+                  color: Colors.blueAccent,
+                ),
+                Positioned(
+                  right: 10,
+                  top: 10,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 25,
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AccountSettings()),
+                        );
+                      },
+                      icon: const Icon(Icons.settings, size: 30, color: Color(0xFFCB6363),),
+                    ),
+                  ),
+                ),
+              ]),
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate([
               ProfileDetails(),
               PetsList(),
-            ],
+            ]),
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AccountSettings()),
-          );
-        },
-        foregroundColor: AniColorPrimary,
-        backgroundColor: Colors.white,
-        child: const Icon(Icons.settings),
+        ],
       ),
     );
   }

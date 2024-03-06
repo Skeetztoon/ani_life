@@ -1,4 +1,7 @@
+import 'package:ani_life/components/profile/pets/adding_new_pet_screen.dart';
 import 'package:ani_life/utils/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,25 +12,45 @@ class PetsList extends StatefulWidget {
   State<PetsList> createState() => _PetsListState();
 }
 
-class Pet {
-  final String name;
-  final Color imageColor;
-  Pet({required this.name, required this.imageColor});
-}
-
-List<Pet> pets = [
-  Pet(name: "Буся", imageColor: Colors.blue),
-  Pet(name: "Пуся", imageColor: Colors.yellow),
-];
+// class Pet {
+//   final String name;
+//   final Color imageColor;
+//   Pet({required this.name, required this.imageColor});
+// }
+//
+// List<Pet> pets = [
+//   Pet(name: "Буся", imageColor: Colors.blue),
+//   Pet(name: "Пуся", imageColor: Colors.yellow),
+// ];
 
 class _PetsListState extends State<PetsList> {
 
-  int _focusedIndex = 0;
-  void _onItemFocus(int index) {
-    setState(() {
-      _focusedIndex = index;
-    });
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<DocumentSnapshot> _pets = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchPets();
   }
+
+  Future<void> _fetchPets() async {
+    // Assuming you have the current user's ID
+    final currentUser = FirebaseAuth.instance.currentUser;
+
+    // Fetch the user document to get the list of owned pet IDs
+    DocumentSnapshot userDoc = await _firestore.collection('users').doc(currentUser!.email).get();
+    List<String> petIds = List<String>.from(userDoc['pets']);
+
+    // Fetch each pet document by ID
+    for (String petId in petIds) {
+      DocumentSnapshot petDoc = await _firestore.collection('pets').doc(petId).get();
+      setState(() {
+        _pets.add(petDoc);
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,28 +67,21 @@ class _PetsListState extends State<PetsList> {
           // height: 300,
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Row(
+            child: _pets.isEmpty?AddPetContainer():Row(
               children: [
                 ListView.separated(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
-                  itemCount: pets.length,
+                  itemCount: _pets.length,
                   separatorBuilder: (context, index) {
                     return const SizedBox(width: 12,);
                   },
                   itemBuilder: (context, index) {
-                    return PetCard(petName: pets[index].name, imageColor: Colors.amber,);
+                    return PetCard(petName: _pets[index]["name"], petAge: _pets[index]["age"], imageColor: Colors.amber,);
                   },
                 ),
-
-                SizedBox(width: 12,),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.white,
-                  ),
-                  child: IconButton(icon: Icon(Icons.add_circle), onPressed: () {},),
-                ),
+                const SizedBox(width: 12,),
+                const AddPetContainer(),
               ],
             ),
           ),
@@ -76,9 +92,10 @@ class _PetsListState extends State<PetsList> {
 }
 
 class PetCard extends StatelessWidget {
-  const PetCard({super.key, required this.petName, this.imageColor});
+  const PetCard({super.key, required this.petName, required this.petAge, this.imageColor});
 
   final String petName;
+  final int petAge;
   final Color? imageColor;
 
   @override
@@ -103,8 +120,35 @@ class PetCard extends StatelessWidget {
                 .titleMedium
                 ?.copyWith(color: Colors.black),
           ),
+          Text(
+            "${petAge} лет",
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall,
+          ),
         ],
       ),
+    );
+  }
+}
+
+class AddPetContainer extends StatelessWidget {
+  const AddPetContainer({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        color: Colors.white,
+      ),
+      child: IconButton(icon: Icon(Icons.add_circle), onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const AddingNewPetScreen()),
+        );
+      },),
     );
   }
 }

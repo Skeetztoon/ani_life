@@ -1,5 +1,5 @@
 import 'package:ani_life/components/profile/images/imageSelectionPreview.dart';
-import 'package:ani_life/components/profile/myInfoField.dart';
+import 'package:ani_life/components/profile/credentials/myInfoField.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
