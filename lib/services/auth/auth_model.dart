@@ -44,10 +44,11 @@ class Authentication {
         email: email.trim(),
         password: password,
       );
+      // _firestore.collection("pets").doc().set({"petname": petname, "petimages" : [], "gender": });
       _firestore.collection('users').doc(userCredential.user!.email).set({
         'username': username,
         'email': userCredential.user!.email,
-        'petname': petname,
+        'pets': [],
         'bio': "",
         'createdOn': DateTime.now(),
       });
@@ -65,9 +66,7 @@ class Authentication {
                         child: const Text("OK"))
                   ]));
     } catch (e) {
-      if (e == 'email-already-in-use') {
-      } else {
-      }
+      print(e);
     }
   }
 

@@ -1,3 +1,4 @@
+import 'package:ani_life/components/profile/images/imageSelectionPreview.dart';
 import 'package:ani_life/components/profile/myInfoField.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -86,6 +87,10 @@ class _AccountSettingsState extends State<AccountSettings> {
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   // САМ КОНТЕНТ
                   children: [
+                    ImageSelectionPreview(),
+                    SizedBox(
+                      height: 30,
+                    ),
                     myInfoField(
                       title: "Имя пользователя",
                       fieldValue: userData["username"].toString(),

@@ -1,3 +1,4 @@
+import 'package:ani_life/components/profile/pets/pets_list.dart';
 import 'package:ani_life/components/profile/profileDetails.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -68,35 +69,17 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
       ),
       body: Center(
-        child: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.width,
-              color: Colors.blue,
-            ),
-            ProfileDetails(),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Icon(
-                Icons.person_outline,
-                size: 120,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.width,
+                color: Colors.blue,
               ),
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Text(
-            //     'Аккаунт: ${(userDocument['username'].toString())}',
-            //     style: Theme.of(context).textTheme.titleMedium,
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Text(
-            //     'Питомец: ${(userDocument['petname'].toString())}',
-            //     style: Theme.of(context).textTheme.titleMedium,
-            //   ),
-            // ),
-          ],
+              ProfileDetails(),
+              PetsList(),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

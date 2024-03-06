@@ -27,7 +27,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
               bio = "😎";
             }
             return Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               color: Colors.white,
               width: MediaQuery.of(context).size.width,
               child: Column(
@@ -40,7 +40,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                         .titleLarge
                         ?.copyWith(color: Colors.black),
                   ),
-                  Divider(),
+                  const Divider(),
                   (userData["bio"] != "")
                       ? Text(userData["bio"],
                           style: Theme.of(context).textTheme.titleSmall)
