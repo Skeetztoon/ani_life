@@ -37,8 +37,7 @@ class _ProfileDetailsState extends State<ProfileDetails> {
                     "${userData["username"]}",
                     style: Theme.of(context)
                         .textTheme
-                        .titleLarge
-                        ?.copyWith(color: Colors.black),
+                        .titleLarge,
                   ),
                   const Divider(),
                   (userData["bio"] != "")

@@ -1,5 +1,5 @@
-import 'package:ani_life/components/profile/images/imageSelectionPreview.dart';
-import 'package:ani_life/components/profile/credentials/myInfoField.dart';
+import 'package:ani_life/components/profile/settings/myInfoField.dart';
+import 'package:ani_life/components/profile/images/user_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +13,9 @@ class AccountSettings extends StatefulWidget {
 
 class _AccountSettingsState extends State<AccountSettings> {
   final currentUser = FirebaseAuth.instance.currentUser;
-
   final usersCollection = FirebaseFirestore.instance.collection("users");
+
+  String imageUrl = "";
 
   Future<void> editField(String hintTitle, String firebaseFieldName) async {
     String newValue = "";
@@ -87,7 +88,13 @@ class _AccountSettingsState extends State<AccountSettings> {
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   // САМ КОНТЕНТ
                   children: [
-                    ImageSelectionPreview(),
+                    UserImage(
+                      onFileChanged: (imageUrl) {
+                        setState(() {
+                          this.imageUrl = imageUrl;
+                        });
+                      },
+                    ),
                     SizedBox(
                       height: 30,
                     ),

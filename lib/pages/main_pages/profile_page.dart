@@ -1,12 +1,15 @@
 import 'package:ani_life/components/profile/credentials/profileDetails.dart';
+import 'package:ani_life/components/profile/friends/friends_button.dart';
+import 'package:ani_life/components/profile/images/profile_picture.dart';
 import 'package:ani_life/components/profile/pets/pets_list.dart';
+import 'package:ani_life/components/profile/posts/posts_section.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../components/profile/credentials/profile_settings.dart';
+import '../../components/profile/settings/profile_settings.dart';
 import '../../services/auth/auth_provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -42,6 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -99,9 +103,7 @@ class _ProfilePageState extends State<ProfilePage> {
             expandedHeight: MediaQuery.of(context).size.width,
             flexibleSpace: FlexibleSpaceBar(
               background: Stack(fit: StackFit.expand, children: [
-                const ColoredBox(
-                  color: Colors.blueAccent,
-                ),
+                ProfilePicture(),
                 Positioned(
                   right: 10,
                   top: 10,
@@ -127,6 +129,10 @@ class _ProfilePageState extends State<ProfilePage> {
             delegate: SliverChildListDelegate([
               ProfileDetails(),
               PetsList(),
+              SizedBox(height: 10,),
+              FriendsButton(),
+              SizedBox(height: 10,),
+              PostsSection(),
             ]),
           ),
         ],

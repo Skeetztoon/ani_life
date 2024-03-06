@@ -9,3 +9,5 @@ Color myBackgroundColor = Colors.grey.shade200;
 Color AniColorPrimary = Color(0xFFCB6363);
 Color AniColorLight = Color(0xFFF39191);
 Color AniColorDark = Color(0xFF964949);
+
+Color TextColorGrey = Color(0xFF525252);

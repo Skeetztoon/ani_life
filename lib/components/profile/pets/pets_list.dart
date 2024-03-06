@@ -2,7 +2,6 @@ import 'package:ani_life/components/profile/pets/adding_new_pet_screen.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PetsList extends StatefulWidget {
@@ -11,17 +10,6 @@ class PetsList extends StatefulWidget {
   @override
   State<PetsList> createState() => _PetsListState();
 }
-
-// class Pet {
-//   final String name;
-//   final Color imageColor;
-//   Pet({required this.name, required this.imageColor});
-// }
-//
-// List<Pet> pets = [
-//   Pet(name: "Буся", imageColor: Colors.blue),
-//   Pet(name: "Пуся", imageColor: Colors.yellow),
-// ];
 
 class _PetsListState extends State<PetsList> {
 
@@ -54,13 +42,17 @@ class _PetsListState extends State<PetsList> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 250,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.white,
+      ),
+      height: 260,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(8),
             color: AniColorLight,
           ),
           padding: EdgeInsets.all(8),
@@ -102,7 +94,7 @@ class PetCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(8),
         color: Colors.white,
       ),
       // height: 250,
@@ -110,15 +102,14 @@ class PetCard extends StatelessWidget {
         children: [
           Container(width: 150, height: 150, decoration: BoxDecoration(
             color: imageColor?? Colors.deepOrange,
-            borderRadius: BorderRadius.circular(15)
+            borderRadius: BorderRadius.circular(8)
           ),),
 
           Text(
             petName,
             style: Theme.of(context)
                 .textTheme
-                .titleMedium
-                ?.copyWith(color: Colors.black),
+                .titleMedium,
           ),
           Text(
             "${petAge} лет",
