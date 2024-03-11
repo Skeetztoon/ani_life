@@ -14,47 +14,48 @@ class ProfilePicture extends StatefulWidget {
 class _ProfilePictureState extends State<ProfilePicture> {
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  String imageUrl = "";
 
 
-  @override
-  void initState() {
-    super.initState();
-    _fetchProfilePicture();
-  }
-
-  Future<void> _fetchProfilePicture() async {
-    // Assuming you have the current user's ID
+  Future<String> _fetchProfilePictureUrl() async {
     final currentUser = FirebaseAuth.instance.currentUser;
-
     // Fetch the user document to get the list of owned pet IDs
     DocumentSnapshot userDoc = await _firestore.collection('users').doc(currentUser!.email).get();
     String fileName = userDoc['profileImage'];
-    print("FILE NAME IS $fileName");
     if (fileName!=null) {
       try {
         final ref = FirebaseStorage.instance.ref().child('usersImages/$fileName');
         final url = await ref.getDownloadURL();
-        print("STORAGE URL IS $url");
-        setState(() {
-          imageUrl = url;
-        });
-        print("URL IS $imageUrl");
+        print("URL IS $url");
+        return url;
       }  catch (e) {
         print(e);
       }
     }
-
+    return "";
   }
-
-
 
   @override
   Widget build(BuildContext context) {
-    if (imageUrl==null) {
-      return Image.asset("assets/images/no-image-image.png");
-    } else {
-      return Image.network(imageUrl);
-    }
+    return FutureBuilder(future: _fetchProfilePictureUrl(), builder: (BuildContext context, snapshot) {
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return const Center(
+          child: CircularProgressIndicator(
+          ),
+        );
+      }
+      else if (snapshot.connectionState==ConnectionState.done) {
+        if ((snapshot.hasError)||(snapshot.data==""))  {
+          return Image.asset("assets/images/no-image-image.png");
+        }
+        else {
+          return Image.network(snapshot.data!);
+        }
+      }
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    });
   }
 }
+
+
