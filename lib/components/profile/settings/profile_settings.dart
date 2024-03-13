@@ -55,7 +55,7 @@ class _AccountSettingsState extends State<AccountSettings> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, size: 35, color: Colors.black),
+          icon: Icon(Icons.arrow_back, size: 30, color: Colors.black),
           onPressed: () => Navigator.of(context).pop(),
         ),
         automaticallyImplyLeading: false,

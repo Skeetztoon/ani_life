@@ -13,7 +13,7 @@ class ProfileButton extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-            width: MediaQuery.of(context).size.width*0.8,
+            width: MediaQuery.of(context).size.width*0.9,
             decoration: BoxDecoration(
                 color: AniColorPrimary,
                 borderRadius: BorderRadius.circular(9)

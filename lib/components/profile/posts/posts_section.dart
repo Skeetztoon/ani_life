@@ -1,6 +1,7 @@
 import 'package:ani_life/components/my_button.dart';
+import 'package:ani_life/components/profile/posts/new_post_screen.dart';
 import 'package:ani_life/components/profile/posts/post_card.dart';
-import 'package:ani_life/components/profile_button.dart';
+import 'package:ani_life/components/profile/posts/profile_button.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,13 @@ class _PostsSectionState extends State<PostsSection> {
       ),
       child: Column(
         children: [
-          ProfileButton(text: "Создать новую запись"),
+          ProfileButton(text: "Создать новую запись", onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const NewPostWidget()),
+            );
+          },),
           PostCard(),
         ],
       ),

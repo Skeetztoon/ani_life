@@ -2,6 +2,8 @@ import 'package:ani_life/components/profile/credentials/profileDetails.dart';
 import 'package:ani_life/components/profile/friends/friends_button.dart';
 import 'package:ani_life/components/profile/images/profile_picture.dart';
 import 'package:ani_life/components/profile/pets/pets_list.dart';
+import 'package:ani_life/components/profile/posts/new_post_screen.dart';
+import 'package:ani_life/components/profile/posts/post_card.dart';
 import 'package:ani_life/components/profile/posts/posts_section.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

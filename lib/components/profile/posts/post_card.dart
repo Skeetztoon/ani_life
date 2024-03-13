@@ -12,17 +12,17 @@ class _PostCardState extends State<PostCard> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        PostHeader(),
+        PostHeader(), // автор и ава
         Divider(indent: 20,
         endIndent: 20,),
-        PostContent(),
-        PostFooter(),
+        PostContent(), // текст и картинка
+        PostFooter(), // кнопки
       ],
     );
   }
 }
 
-class PostHeader extends StatelessWidget {
+class PostHeader extends StatelessWidget { // Автор и ава
   const PostHeader({super.key});
 
   @override
@@ -59,7 +59,7 @@ class PostHeader extends StatelessWidget {
   }
 }
 
-class PostContent extends StatelessWidget {
+class PostContent extends StatelessWidget { // текст и картинка
   const PostContent({super.key});
 
   @override
@@ -80,7 +80,7 @@ class PostContent extends StatelessWidget {
   }
 }
 
-class PostFooter extends StatelessWidget {
+class PostFooter extends StatelessWidget { // кнопки
   const PostFooter({super.key});
 
   @override
