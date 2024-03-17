@@ -2,12 +2,7 @@ import 'package:ani_life/components/profile/credentials/profileDetails.dart';
 import 'package:ani_life/components/profile/friends/friends_button.dart';
 import 'package:ani_life/components/profile/images/profile_picture.dart';
 import 'package:ani_life/components/profile/pets/pets_list.dart';
-import 'package:ani_life/components/profile/posts/new_post_screen.dart';
-import 'package:ani_life/components/profile/posts/post_card.dart';
 import 'package:ani_life/components/profile/posts/posts_section.dart';
-import 'package:ani_life/utils/constants.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -72,31 +67,6 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ],
       ),
-      // body: Center(
-      //   child: SingleChildScrollView(
-      //     child: Column(
-      //       children: [
-      //         Container(
-      //           height: MediaQuery.of(context).size.width,
-      //           color: Colors.blue,
-      //         ),
-      //         ProfileDetails(),
-      //         PetsList(),
-      //       ],
-      //     ),
-      //   ),
-      // ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => const AccountSettings()),
-      //     );
-      //   },
-      //   foregroundColor: AniColorPrimary,
-      //   backgroundColor: Colors.white,
-      //   child: const Icon(Icons.settings),
-      // ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
