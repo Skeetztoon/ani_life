@@ -1,19 +1,39 @@
+import 'package:ani_life/features/auth/data_domain/auth_gate.dart';
+import 'package:ani_life/core/ui_kit/screens/error_screen.dart';
+import 'package:ani_life/core/ui_kit/screens/loading_screen.dart';
 import 'package:ani_life/firebase_options.dart';
-import 'package:ani_life/services/auth/auth_gate.dart';
 import 'package:ani_life/utils/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'pages/login_registration/error_Screen.dart';
-import 'pages/login_registration/loading_Screen.dart';
+import 'package:logging/logging.dart';
 
-void main() {
+Logger logger = Logger('AppLogger');
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const ProviderScope(child: MyApp()));
+
+  Logger.root.level = Level.ALL;
+
+  Logger.root.onRecord.listen(
+    (record) {
+      if (kDebugMode) {
+        print('${record.level.name}: ${record.time}: ${record.message}');
+      }
+    },
+  );
+
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 final firebaseinitializerProvider = FutureProvider<FirebaseApp>((ref) async {
-  return await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  return await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform);
 });
 
 class MyApp extends ConsumerWidget {
