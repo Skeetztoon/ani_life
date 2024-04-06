@@ -1,7 +1,10 @@
 import 'package:ani_life/core/ui_kit/filters_page.dart';
+import 'package:ani_life/core/ui_kit/widgets/app_place_button_sheet.dart';
+import 'package:ani_life/features/map/presentation/widgets/my_map.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
 
 class MySearchBar extends StatefulWidget {
   const MySearchBar({super.key});
@@ -19,7 +22,6 @@ class _MySearchBarState extends State<MySearchBar> {
   @override
   void initState() {
     super.initState();
-    // Add a listener to the focus node to update the state when focus changes
     _focusNode.addListener(() {
       setState(() {
         _isFocused = _focusNode.hasFocus;
@@ -29,7 +31,6 @@ class _MySearchBarState extends State<MySearchBar> {
 
   @override
   void dispose() {
-    // Clean up the focus node when the widget is disposed
     _focusNode.dispose();
     super.dispose();
   }
@@ -127,9 +128,6 @@ class _MySearchBarState extends State<MySearchBar> {
             child: StreamBuilder(
               stream: FirebaseFirestore.instance.collection("vets").snapshots(),
               builder: (context, snapshots) {
-                // for (var doc in snapshots.data!.docs) {
-                //   print(doc.data());
-                // }
                 return (snapshots.connectionState == ConnectionState.waiting)
                     ? const Center(child: CircularProgressIndicator())
                     : ListView.builder(
@@ -144,9 +142,27 @@ class _MySearchBarState extends State<MySearchBar> {
                               .toString()
                               .toLowerCase()
                               .startsWith(searchInput.toLowerCase())) {
-                            return ListTile(
-                              title: Text(data["name"] ?? ""),
-                              subtitle: Text(data["place"] ?? ""),
+                            return InkWell(
+                              onTap: () {
+                                mapController.move(
+                                    LatLng(
+                                        data["coords"][0], data["coords"][1]),
+                                    15.5);
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AppPlaceBottomSheet(
+                                      placeName: data["name"],
+                                      address: data["place"],
+                                      schedule: data["schedule"] ?? "",
+                                    );
+                                  },
+                                );
+                              },
+                              child: ListTile(
+                                title: Text(data["name"] ?? ""),
+                                subtitle: Text(data["place"] ?? ""),
+                              ),
                             );
                           } else {
                             return Container();

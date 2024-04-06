@@ -1,4 +1,4 @@
-import 'package:ani_life/core/ui_kit/widgets/my_searchbar.dart';
+import 'package:ani_life/features/search_bar/presentation/searchbar.dart';
 import 'package:ani_life/features/map/presentation/widgets/chipsCarousel.dart';
 import 'package:ani_life/features/map/presentation/widgets/my_map.dart';
 import 'package:flutter/material.dart';
