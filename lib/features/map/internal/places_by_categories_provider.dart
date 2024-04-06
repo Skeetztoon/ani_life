@@ -11,7 +11,8 @@ final categoryRepositoryProvider = Provider<CategoryRepository>((ref) {
 final placesByCategoriesProvider = FutureProvider.autoDispose
     .family<List<Place>, Set<String>>((ref, selectedCategoriesSet) async {
   final categoryRepository = ref.watch(
-      categoryRepositoryProvider); // Assuming you have a way to access FirebaseService
+    categoryRepositoryProvider,
+  ); // Assuming you have a way to access FirebaseService
   return await categoryRepository
       .fetchPlacesByCategories(selectedCategoriesSet);
 });

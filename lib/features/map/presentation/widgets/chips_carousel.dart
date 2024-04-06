@@ -1,17 +1,8 @@
-import 'package:ani_life/features/map/domain/category_model.dart';
+import 'package:ani_life/features/map/domain/category_list.dart';
 import 'package:ani_life/features/map/internal/category_list_notifier_provider.dart';
 import 'package:ani_life/features/map/internal/category_notifier_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-// список кнопок категорий
-final List<Category> categoryList = [
-  Category("Магазины", "stores", false),
-  Category("Клиники", "vets", false),
-  Category("Передержка", "care", false),
-  Category("Приюты", "shelters", false),
-  Category("Площадки", "playground", false),
-];
 
 class ChipCarousel extends StatelessWidget {
   // сам виджет карусели

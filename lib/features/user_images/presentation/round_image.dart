@@ -6,8 +6,12 @@ class RoundImage extends StatelessWidget {
   final double height;
   final double width;
 
-  const RoundImage(this.provider,
-      {super.key, required this.height, required this.width});
+  const RoundImage(
+    this.provider, {
+    super.key,
+    required this.height,
+    required this.width,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +25,19 @@ class RoundImage extends StatelessWidget {
     );
   }
 
-  factory RoundImage.url(String url,
-      {required double height, required double width}) {
+  factory RoundImage.url(
+    String url, {
+    required double height,
+    required double width,
+  }) {
     return RoundImage(NetworkImage(url), height: height, width: width);
   }
 
-  factory RoundImage.memory(Uint8List data,
-      {required double height, required double width}) {
+  factory RoundImage.memory(
+    Uint8List data, {
+    required double height,
+    required double width,
+  }) {
     return RoundImage(MemoryImage(data), height: height, width: width);
   }
 }

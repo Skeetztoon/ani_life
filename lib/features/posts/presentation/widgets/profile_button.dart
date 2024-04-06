@@ -15,7 +15,7 @@ class ProfileButton extends StatelessWidget {
         child: Container(
           width: MediaQuery.of(context).size.width * 0.9,
           decoration: BoxDecoration(
-            color: AniColorPrimary,
+            color: aniColorPrimary,
             borderRadius: BorderRadius.circular(9),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),

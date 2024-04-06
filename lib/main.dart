@@ -33,7 +33,8 @@ void main() async {
 
 final firebaseinitializerProvider = FutureProvider<FirebaseApp>((ref) async {
   return await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform);
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 });
 
 class MyApp extends ConsumerWidget {
@@ -52,11 +53,12 @@ class MyApp extends ConsumerWidget {
       //   useMaterial3: true,
       // ),
       home: initialize.when(
-          data: (data) {
-            return const AuthGate();
-          },
-          loading: () => const LoadingScreen(),
-          error: (e, stackTrace) => ErrorScreen(e, stackTrace)),
+        data: (data) {
+          return const AuthGate();
+        },
+        loading: () => const LoadingScreen(),
+        error: (e, stackTrace) => ErrorScreen(e, stackTrace),
+      ),
     );
   }
 }

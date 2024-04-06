@@ -1,8 +1,7 @@
+import 'package:ani_life/features/map/presentation/map_screen.dart';
 import 'package:ani_life/features/profile/presentation/profile_screen.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:flutter/material.dart';
-
-import 'features/map/presentation/map_screen.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({super.key});
@@ -31,11 +30,11 @@ class _InitialPageState extends State<InitialPage> {
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        selectedItemColor: AniColorDark,
-        unselectedItemColor: AniColorLight,
+        selectedItemColor: aniColorDark,
+        unselectedItemColor: aniColorLight,
         onTap: _navigateBottomBar,
         currentIndex: _currentIndex,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             label: "Events",
             icon: Icon(
@@ -43,12 +42,6 @@ class _InitialPageState extends State<InitialPage> {
               size: 30,
             ),
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.star_border),
-          // ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.message_outlined),
-          // ),
           BottomNavigationBarItem(
             label: "Home",
             icon: Icon(

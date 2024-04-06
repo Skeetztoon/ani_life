@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class PetCard extends StatelessWidget {
-  const PetCard(
-      {super.key,
-      required this.petName,
-      required this.petAge,
-      this.imageColor});
+  const PetCard({
+    super.key,
+    required this.petName,
+    required this.petAge,
+    this.imageColor,
+  });
 
   final String petName;
   final int petAge;

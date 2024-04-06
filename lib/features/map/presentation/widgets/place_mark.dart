@@ -13,7 +13,8 @@ class PlaceMark extends StatelessWidget {
     super.key,
     required this.placeName,
     required this.schedule,
-    required this.address, required this.markerPosition,
+    required this.address,
+    required this.markerPosition,
   });
 
   @override

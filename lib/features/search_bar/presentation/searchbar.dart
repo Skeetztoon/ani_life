@@ -1,7 +1,5 @@
-import 'package:ani_life/core/ui_kit/filters_page.dart';
 import 'package:ani_life/core/ui_kit/widgets/app_place_button_sheet.dart';
 import 'package:ani_life/features/map/presentation/widgets/my_map.dart';
-import 'package:ani_life/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
@@ -53,7 +51,7 @@ class _MySearchBarState extends State<MySearchBar> {
                 Expanded(
                   // width: (MediaQuery. of(context). size. width),
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
+                    padding: const EdgeInsets.only(bottom: 10),
                     child: TextField(
                       focusNode: _focusNode,
                       controller: _searchController,
@@ -96,21 +94,6 @@ class _MySearchBarState extends State<MySearchBar> {
                     ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const FiltersPage(),
-                      ),
-                    );
-                  },
-                  icon: Icon(
-                    Icons.filter_alt_outlined,
-                    color: AniColorPrimary,
-                    size: 40,
-                  ),
-                ),
               ],
             ),
           ),
@@ -120,8 +103,9 @@ class _MySearchBarState extends State<MySearchBar> {
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30)),
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
             ),
             height: 300,
             width: MediaQuery.of(context).size.width,
@@ -145,9 +129,12 @@ class _MySearchBarState extends State<MySearchBar> {
                             return InkWell(
                               onTap: () {
                                 mapController.move(
-                                    LatLng(
-                                        data["coords"][0], data["coords"][1]),
-                                    15.5);
+                                  LatLng(
+                                    data["coords"][0],
+                                    data["coords"][1],
+                                  ),
+                                  15.5,
+                                );
                                 showModalBottomSheet(
                                   context: context,
                                   builder: (BuildContext context) {

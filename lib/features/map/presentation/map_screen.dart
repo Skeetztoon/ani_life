@@ -1,5 +1,5 @@
 import 'package:ani_life/features/search_bar/presentation/searchbar.dart';
-import 'package:ani_life/features/map/presentation/widgets/chipsCarousel.dart';
+import 'package:ani_life/features/map/presentation/widgets/chips_carousel.dart';
 import 'package:ani_life/features/map/presentation/widgets/my_map.dart';
 import 'package:flutter/material.dart';
 

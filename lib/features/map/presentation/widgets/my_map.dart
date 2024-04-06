@@ -1,7 +1,9 @@
+import 'package:ani_life/core/ui_kit/filters_page.dart';
 import 'package:ani_life/features/map/domain/place_model.dart';
 import 'package:ani_life/features/map/internal/category_list_notifier_provider.dart';
 import 'package:ani_life/features/map/internal/places_by_categories_provider.dart';
 import 'package:ani_life/features/map/presentation/widgets/place_mark.dart';
+import 'package:ani_life/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
@@ -39,8 +41,6 @@ class MyMap extends ConsumerStatefulWidget {
 }
 
 class _MyMapState extends ConsumerState<MyMap> {
-
-
   @override
   Widget build(BuildContext context) {
     final categoryList = ref.watch(categoryListStateNotifierProvider);
@@ -71,8 +71,11 @@ class _MyMapState extends ConsumerState<MyMap> {
                 // spiderfySpiralDistanceMultiplier: 2,
                 // spiderfyCircleRadius: 20,
                 markers: ref
-                    .watch(placesByCategoriesProvider(
-                        categoryList)) // берем из провайдера список
+                    .watch(
+                      placesByCategoriesProvider(
+                        categoryList,
+                      ),
+                    ) // берем из провайдера список
                     .when(
                       data: (data) => myMarkers(data), // получаем лист маркеров
                       error: (_, __) => [],
@@ -96,60 +99,114 @@ class _MyMapState extends ConsumerState<MyMap> {
             ),
           ],
         ),
-        Positioned(                                       // кнопки зума
+        Positioned(
+          top: 80,
+          right: 10,
+          child: GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                useSafeArea: true,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.zero,
+                    topRight: Radius.zero,
+                  ),
+                ),
+                isScrollControlled: true,
+                context: context,
+                builder: (BuildContext context) {
+                  return const FiltersPage();
+                },
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withOpacity(0.85),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.25),
+                    blurRadius: 2,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Icon(
+                Icons.layers_rounded,
+                color: aniColorPrimary,
+                size: 40,
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          // кнопки зума
           bottom: 300,
           right: 10,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Material(
-                type: MaterialType.transparency,
-                child: Ink(
+              InkWell(
+                onTap: () async {
+                  var currentZoomLevel = mapController.camera.zoom;
+                  currentZoomLevel += 0.5;
+                  if (currentZoomLevel < 0) currentZoomLevel = 0;
+                  mapController.move(
+                    mapController.camera.center,
+                    currentZoomLevel,
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.grey.shade400, width: 1.5),
+                    color: Colors.white.withOpacity(0.85),
                     borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        blurRadius: 2,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
                   ),
-                  child: InkWell(
-                    onTap: () async {
-                      var currentZoomLevel = mapController.camera.zoom;
-                      currentZoomLevel += 0.5;
-                      if (currentZoomLevel < 0) currentZoomLevel = 0;
-                      mapController.move(
-                          mapController.camera.center, currentZoomLevel);
-                    },
-                    child: Icon(
-                      Icons.add,
-                      size: 40.0,
-                      color: Colors.grey.shade400,
-                    ),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.grey.shade400,
+                    size: 40,
                   ),
                 ),
               ),
               const SizedBox(
-                height: 2,
+                height: 5,
               ),
-              Material(
-                type: MaterialType.transparency,
-                child: Ink(
+              InkWell(
+                onTap: () async {
+                  var currentZoomLevel = mapController.camera.zoom;
+                  currentZoomLevel -= 0.5;
+                  if (currentZoomLevel < 0) currentZoomLevel = 0;
+                  mapController.move(
+                    mapController.camera.center,
+                    currentZoomLevel,
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.grey.shade400, width: 1.5),
+                    color: Colors.white.withOpacity(0.85),
                     borderRadius: BorderRadius.circular(10.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        blurRadius: 2,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
                   ),
-                  child: InkWell(
-                    onTap: () async {
-                      var currentZoomLevel = mapController.camera.zoom;
-                      currentZoomLevel -= 0.5;
-                      if (currentZoomLevel < 0) currentZoomLevel = 0;
-                      mapController.move(
-                          mapController.camera.center, currentZoomLevel);
-                    },
-                    child: Icon(
-                      Icons.remove,
-                      size: 40.0,
-                      color: Colors.grey.shade400,
-                    ),
+                  child: Icon(
+                    Icons.remove,
+                    color: Colors.grey.shade400,
+                    size: 40,
                   ),
                 ),
               ),

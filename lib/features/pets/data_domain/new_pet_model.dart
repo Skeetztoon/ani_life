@@ -22,7 +22,7 @@ class AddNewPet {
       }).then(
         (documentSnapshot) =>
             _firestore.collection("users").doc(currentUser!.email).update({
-          "pets": FieldValue.arrayUnion([(documentSnapshot.id)])
+          "pets": FieldValue.arrayUnion([(documentSnapshot.id)]),
         }),
       );
       logger.log(Level.FINE, "Животина добавлена");

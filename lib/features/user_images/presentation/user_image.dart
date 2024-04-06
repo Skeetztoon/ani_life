@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ani_life/features/user_images/presentation/round_image.dart';
+import 'package:ani_life/main.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 
 class UserImage extends StatefulWidget {
@@ -64,8 +66,9 @@ class _UserImageState extends State<UserImage> {
     }
 
     var file = await ImageCropper().cropImage(
-        sourcePath: pickedFile.path,
-        aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1));
+      sourcePath: pickedFile.path,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+    );
     if (file == null) {
       return;
     }
@@ -93,8 +96,7 @@ class _UserImageState extends State<UserImage> {
 
       widget.onFileChanged(fileUrl);
     } catch (e) {
-      // Handle error
-      print(e);
+      logger.log(Level.SEVERE, e);
     }
   }
 
@@ -134,7 +136,7 @@ class _UserImageState extends State<UserImage> {
               child: IconButton(
                 icon: Icon(
                   Icons.add_circle_rounded,
-                  color: AniColorLight,
+                  color: aniColorLight,
                 ),
                 onPressed: () async {
                   await _selectImage();

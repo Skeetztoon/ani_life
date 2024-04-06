@@ -1,4 +1,4 @@
-import 'package:ani_life/features/profile/presentation/widgets/profileDetails.dart';
+import 'package:ani_life/features/profile/presentation/widgets/profile_details.dart';
 import 'package:ani_life/features/profile/presentation/widgets/friends_button.dart';
 import 'package:ani_life/features/user_images/presentation/profile_picture.dart';
 import 'package:ani_life/features/pets/presentation/widgets/pets_list.dart';

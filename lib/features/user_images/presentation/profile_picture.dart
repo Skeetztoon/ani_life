@@ -1,7 +1,9 @@
+import 'package:ani_life/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 class ProfilePicture extends StatefulWidget {
   // Виджет для отображения аватарки
@@ -24,10 +26,10 @@ class _ProfilePictureState extends State<ProfilePicture> {
     try {
       final ref = FirebaseStorage.instance.ref().child('usersImages/$fileName');
       final url = await ref.getDownloadURL();
-      print("URL IS $url");
+      logger.log(Level.FINE, "your url is: $url");
       return url;
     } catch (e) {
-      print(e);
+      logger.log(Level.SEVERE, e);
     }
 
     return "";

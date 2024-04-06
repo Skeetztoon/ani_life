@@ -49,7 +49,7 @@ class _AddingNewPetScreenState extends State<AddingNewPetScreen> {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          color: AniColorLight,
+                          color: aniColorLight,
                         ),
                       ),
                     ),
@@ -61,10 +61,12 @@ class _AddingNewPetScreenState extends State<AddingNewPetScreen> {
                       ),
                       onPressed: () async {
                         await AddNewPet(
-                                petName: _petNameController.text,
-                                petAge: int.parse(_petAgeController.text))
-                            .createNewPet();
-                        Navigator.pop(context);
+                          petName: _petNameController.text,
+                          petAge: int.parse(_petAgeController.text),
+                        ).createNewPet();
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                        }
                       },
                       child: const Text('Добавить'),
                     ),

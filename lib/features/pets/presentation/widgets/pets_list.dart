@@ -54,7 +54,7 @@ class _PetsListState extends State<PetsList> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: AniColorLight,
+            color: aniColorLight,
           ),
           padding: const EdgeInsets.all(8),
           // height: 300,

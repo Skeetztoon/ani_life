@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppPlaceBottomSheet extends StatelessWidget {
-  const AppPlaceBottomSheet({super.key, required this.placeName, required this.schedule, required this.address});
+  const AppPlaceBottomSheet(
+      {super.key,
+      required this.placeName,
+      required this.schedule,
+      required this.address});
 
   final String placeName;
   final String schedule;
@@ -19,11 +23,14 @@ class AppPlaceBottomSheet extends StatelessWidget {
             height: 15,
           ),
           Center(
-            child: Container(decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              color: Colors.blueGrey,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.blueGrey,
+              ),
+              height: 8,
+              width: 120,
             ),
-            height: 8, width: 120,),
           ),
           const SizedBox(
             height: 10,

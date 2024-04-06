@@ -1,6 +1,8 @@
+import 'package:ani_life/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 class Authentication {
   // For Authentication related functions you need an instance of FirebaseAuth
@@ -23,21 +25,23 @@ class Authentication {
         password: password,
       );
     } on FirebaseAuthException catch (e) {
-      await showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Error Occured'),
-          content: Text(e.toString()),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-              child: const Text("OK"),
-            ),
-          ],
-        ),
-      );
+      if (context.mounted) {
+        await showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text('Error Occured'),
+            content: Text(e.toString()),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          ),
+        );
+      }
     }
   }
 
@@ -65,23 +69,25 @@ class Authentication {
         'createdOn': DateTime.now(),
       });
     } on FirebaseAuthException catch (e) {
-      await showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Error Occured'),
-          content: Text(e.toString()),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(ctx).pop();
-              },
-              child: const Text("OK"),
-            ),
-          ],
-        ),
-      );
+      if (context.mounted) {
+        await showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: const Text('Error Occured'),
+            content: Text(e.toString()),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          ),
+        );
+      }
     } catch (e) {
-      print(e);
+      logger.log(Level.SEVERE, e);
     }
   }
 

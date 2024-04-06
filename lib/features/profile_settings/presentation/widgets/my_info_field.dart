@@ -5,11 +5,12 @@ class MyInfoField extends StatelessWidget {
   final String title;
   final String fieldValue;
   final void Function()? onPressed;
-  const MyInfoField(
-      {super.key,
-      required this.title,
-      required this.fieldValue,
-      required this.onPressed});
+  const MyInfoField({
+    super.key,
+    required this.title,
+    required this.fieldValue,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,22 +1,39 @@
-import 'package:ani_life/core/ui_kit/widgets/my_chip_filter.dart';
+import 'package:ani_life/features/map/domain/category_list.dart';
+import 'package:ani_life/features/map/internal/category_list_notifier_provider.dart';
+import 'package:ani_life/features/map/internal/category_notifier_provider.dart';
 import 'package:flutter/material.dart ';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FiltersPage extends StatefulWidget {
-  const FiltersPage({super.key});
+class FiltersPage extends ConsumerStatefulWidget {
+  const FiltersPage({Key? key}) : super(key: key);
 
   @override
-  State<FiltersPage> createState() => _FiltersPageState();
+  ConsumerState<FiltersPage> createState() => _FiltersPageState();
 }
 
-class _FiltersPageState extends State<FiltersPage> {
+class _FiltersPageState extends ConsumerState<FiltersPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.blueGrey,
+                ),
+                height: 8,
+                width: 120,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             Text(
               "Фильтры",
               style: Theme.of(context).textTheme.titleLarge,
@@ -36,16 +53,15 @@ class _FiltersPageState extends State<FiltersPage> {
             ),
             const Wrap(
               children: [
-                MyChipFilter(lbl: "Груминг"),
-                MyChipFilter(lbl: "Ветклиника"),
-                MyChipFilter(lbl: "Кинологические центры"),
+                Chip(id: 1),
+                Chip(id: 4),
+                Chip(
+                  id: 5,
+                ),
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 5.0),
+              padding: const EdgeInsets.only(bottom: 5.0, top: 20),
               child: Text(
                 "Места",
                 style: Theme.of(context)
@@ -56,16 +72,15 @@ class _FiltersPageState extends State<FiltersPage> {
             ),
             const Wrap(
               children: [
-                MyChipFilter(lbl: "Развлечения"),
-                MyChipFilter(lbl: "Площадки для выгула"),
-                MyChipFilter(lbl: "Кафе и рестораны"),
+                Chip(id: 6),
+                Chip(id: 7),
+                Chip(
+                  id: 8,
+                ),
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 5.0),
+              padding: const EdgeInsets.only(bottom: 5.0, top: 20),
               child: Text(
                 "Магазины",
                 style: Theme.of(context)
@@ -76,15 +91,64 @@ class _FiltersPageState extends State<FiltersPage> {
             ),
             const Wrap(
               children: [
-                MyChipFilter(lbl: "Товары для кошек и собак"),
-                MyChipFilter(lbl: "Одежда"),
-                MyChipFilter(lbl: "Товары для грызунов"),
-                MyChipFilter(lbl: "Товары для экзотических животных"),
+                Chip(id: 0),
+                Chip(id: 9),
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class Chip extends StatelessWidget {
+  const Chip({super.key, required this.id});
+
+  final int id;
+  @override
+  Widget build(BuildContext context) {
+    return Consumer(
+      builder: (context, ref, child) {
+        final item = ref.watch(
+          categoryNotifierProvider(categoryList[id]),
+        );
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: FilterChip(
+            label: Text(
+              item.id,
+            ),
+            selected: item.selected,
+            onSelected: (bool value) {
+              ref
+                  .read(
+                    categoryNotifierProvider(categoryList[id]).notifier,
+                  )
+                  .toggleSelected();
+              if (value) {
+                ref
+                    .read(categoryListStateNotifierProvider.notifier)
+                    .addCategory(item.categoryName);
+              } else {
+                ref
+                    .read(categoryListStateNotifierProvider.notifier)
+                    .removeCategory(item.categoryName);
+              }
+            },
+            selectedColor: Colors.grey.shade200,
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+              side: const BorderSide(
+                color: Color(0xFFF39191),
+                width: 2.0,
+              ),
+            ),
+            // avatar: const Text("A"),
+          ),
+        );
+      },
     );
   }
 }
