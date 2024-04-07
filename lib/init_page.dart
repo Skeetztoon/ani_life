@@ -1,5 +1,5 @@
 import 'package:ani_life/features/map/presentation/map_screen.dart';
-import 'package:ani_life/features/profile/presentation/profile_screen.dart';
+import 'package:ani_life/features/profile/presentation/view/screens/profile_screen.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:flutter/material.dart';
 

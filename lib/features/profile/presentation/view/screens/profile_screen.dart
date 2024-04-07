@@ -1,5 +1,5 @@
-import 'package:ani_life/features/profile/presentation/widgets/profile_details.dart';
-import 'package:ani_life/features/profile/presentation/widgets/friends_button.dart';
+import 'package:ani_life/features/profile/presentation/view/widgets/friends_button.dart';
+import 'package:ani_life/features/profile/presentation/view/widgets/profile_details.dart';
 import 'package:ani_life/features/user_images/presentation/profile_picture.dart';
 import 'package:ani_life/features/pets/presentation/widgets/pets_list.dart';
 import 'package:ani_life/features/posts/presentation/widgets/posts_section.dart';
@@ -18,28 +18,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  // late DocumentSnapshot userDocument;
-  //
-  // Future<void> getCurrentUserDocument() async {
-  //   final User? user = FirebaseAuth.instance.currentUser;
-  //   if (user != null) {
-  //     userDocument = await FirebaseFirestore.instance
-  //         .collection('users')
-  //         .doc(user.uid)
-  //         .get();
-  //   }
-  // }
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getCurrentUserDocument();
-  // }
-  //
-  // Future setProfilePicture() async {
-  //   final _selectedPicture = await ImagePicker().pickImage(source: ImageSource.gallery);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,31 +48,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
-      // body: Center(
-      //   child: SingleChildScrollView(
-      //     child: Column(
-      //       children: [
-      //         Container(
-      //           height: MediaQuery.of(context).size.width,
-      //           color: Colors.blue,
-      //         ),
-      //         ProfileDetails(),
-      //         PetsList(),
-      //       ],
-      //     ),
-      //   ),
-      // ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => const AccountSettings()),
-      //     );
-      //   },
-      //   foregroundColor: AniColorPrimary,
-      //   backgroundColor: Colors.white,
-      //   child: const Icon(Icons.settings),
-      // ),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(

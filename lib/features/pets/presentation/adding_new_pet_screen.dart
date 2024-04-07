@@ -1,4 +1,4 @@
-import 'package:ani_life/features/pets/data_domain/new_pet_model.dart';
+import 'package:ani_life/features/pets/data/new_pet_model.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:flutter/material.dart';
 

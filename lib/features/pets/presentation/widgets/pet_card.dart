@@ -16,7 +16,7 @@ class PetCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // print("Ето контаинер $petName'а"); // TODO сделать экран питомца
+        // TODO сделать экран питомца
       },
       child: Container(
         decoration: BoxDecoration(

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppPlaceBottomSheet extends StatelessWidget {
-  const AppPlaceBottomSheet(
-      {super.key,
-      required this.placeName,
-      required this.schedule,
-      required this.address});
+  const AppPlaceBottomSheet({
+    super.key,
+    required this.placeName,
+    required this.schedule,
+    required this.address,
+  });
 
   final String placeName;
   final String schedule;
