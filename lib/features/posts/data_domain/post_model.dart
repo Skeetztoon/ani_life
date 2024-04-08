@@ -17,6 +17,7 @@ Future<bool> createPost(String postText) async {
     "text": postText,
     "authorImage": userData["profileImage"],
     "createDate": DateFormat.yMd().add_Hm().format(DateTime.now()),
+    // TODO сделать добавление картинок
   };
   try {
     await _firestore.collection("posts").add(postData);

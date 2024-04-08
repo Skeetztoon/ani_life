@@ -31,7 +31,7 @@ class _PostsSectionState extends State<PostsSection> {
               );
             },
           ),
-          const PostCard(),
+          const PostCard(), //TODO мои посты (через listView.builder?)
         ],
       ),
     );

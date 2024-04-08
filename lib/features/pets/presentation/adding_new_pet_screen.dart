@@ -14,6 +14,13 @@ class _AddingNewPetScreenState extends State<AddingNewPetScreen> {
   final TextEditingController _petAgeController = TextEditingController();
 
   @override
+  void dispose() {
+    _petNameController.dispose();
+    _petAgeController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
@@ -37,7 +44,9 @@ class _AddingNewPetScreenState extends State<AddingNewPetScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  IconButton(onPressed: () {}, icon: const Icon(Icons.male)),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.male)), //TODO сделать выбор пола
                   IconButton(onPressed: () {}, icon: const Icon(Icons.female)),
                 ],
               ),

@@ -34,37 +34,40 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  flutter_riverpod: ^2.4.9
+  cupertino_icons: ^1.0.6
+  flutter_riverpod: ^2.5.1
   logging: ^1.2.0
 
-  firebase_core: ^2.25.4
-  firebase_auth: ^4.17.5
-  cloud_firestore: ^4.15.5
+  firebase_core: ^2.28.0
+  firebase_auth: ^4.19.0
+  cloud_firestore: ^4.16.0
 
-  flutter_map: ^6.0.0
-  latlong2: ^0.9.0
-  flutter_map_cancellable_tile_provider: ^1.0.0
+  flutter_map: ^6.1.0
+  latlong2: ^0.9.1
+  flutter_map_cancellable_tile_provider: ^2.0.0
   flutter_map_marker_cluster:
 
-  firebase_storage: ^11.6.6
+  firebase_storage: ^11.7.0
   image_picker: ^1.0.7
   image_cropper: ^5.0.1
   cached_network_image: ^3.3.1
 
+  flutter_localizations:
+    sdk: flutter
   intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

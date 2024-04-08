@@ -21,7 +21,7 @@ class _NewPostWidgetState extends State<NewPostWidget> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {}, //TODO добавление записи
             icon: Icon(
               Icons.check,
               size: 30,
@@ -47,7 +47,7 @@ class _NewPostWidgetState extends State<NewPostWidget> {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add_a_photo_outlined),
-        onPressed: () {},
+        onPressed: () {}, //TODO прикрепление фото
       ),
     );
   }

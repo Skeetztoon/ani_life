@@ -142,7 +142,7 @@ class _MyMapState extends ConsumerState<MyMap> {
         ),
         Positioned(
           // кнопки зума
-          bottom: 300,
+          bottom: MediaQuery.of(context).size.height * 0.3,
           right: 10,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
