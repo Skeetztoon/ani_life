@@ -1,44 +1,17 @@
-import 'package:ani_life/main.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:ani_life/features/user_images/internal/profile_picture_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProfilePicture extends StatefulWidget {
-  // Виджет для отображения аватарки
+class ProfilePicture extends ConsumerWidget {
   const ProfilePicture({super.key});
 
   @override
-  State<ProfilePicture> createState() => _ProfilePictureState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profilePictureFetcher = ref.watch(profilePictureFetcherProvider);
+    final profilePictureUrlFuture = profilePictureFetcher.fetchProfilePictureUrl();
 
-class _ProfilePictureState extends State<ProfilePicture> {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  Future<String> _fetchProfilePictureUrl() async {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    // Fetch the user document to get the list of owned pet IDs
-    DocumentSnapshot userDoc =
-        await _firestore.collection('users').doc(currentUser!.email).get();
-    String fileName = userDoc['profileImage'];
-
-    try {
-      final ref = FirebaseStorage.instance.ref().child('usersImages/$fileName');
-      final url = await ref.getDownloadURL();
-      logger.log(Level.FINE, "your url is: $url");
-      return url;
-    } catch (e) {
-      logger.log(Level.SEVERE, e);
-    }
-
-    return "";
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return FutureBuilder(
-      future: _fetchProfilePictureUrl(),
+      future: profilePictureUrlFuture,
       builder: (BuildContext context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
