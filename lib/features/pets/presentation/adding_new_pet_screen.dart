@@ -46,7 +46,7 @@ class _AddingNewPetScreenState extends State<AddingNewPetScreen> {
                 children: [
                   IconButton(
                       onPressed: () {},
-                      icon: const Icon(Icons.male)), //TODO сделать выбор пола
+                      icon: const Icon(Icons.male),), //TODO сделать выбор пола
                   IconButton(onPressed: () {}, icon: const Icon(Icons.female)),
                 ],
               ),

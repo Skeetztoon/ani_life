@@ -6,7 +6,6 @@ import 'package:ani_life/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storage;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -55,7 +54,7 @@ class _UserImageState extends State<UserImage> {
                       child: const Column(
                         children: [
                           Icon(Icons.camera_alt_outlined),
-                          Text("Сделать снимок")
+                          Text("Сделать снимок"),
                         ],
                       ),
                       onTap: () {
@@ -67,7 +66,7 @@ class _UserImageState extends State<UserImage> {
                       child: const Column(
                         children: [
                           Icon(Icons.filter),
-                          Text("Выбрать в галерее")
+                          Text("Выбрать в галерее"),
                         ],
                       ),
                       onTap: () {

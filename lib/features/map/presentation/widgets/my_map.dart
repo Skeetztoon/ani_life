@@ -51,8 +51,10 @@ class _MyMapState extends ConsumerState<MyMap> {
           mapController: mapController,
           options: const MapOptions(
             initialCenter: LatLng(55.751244, 37.618423),
-            initialZoom: 9.2,
-            interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+            initialZoom: 10.2,
+            interactionOptions: InteractionOptions(
+              flags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+            ),
           ),
           children: [
             TileLayer(

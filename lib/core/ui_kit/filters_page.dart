@@ -5,7 +5,7 @@ import 'package:flutter/material.dart ';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FiltersPage extends ConsumerStatefulWidget {
-  const FiltersPage({Key? key}) : super(key: key);
+  const FiltersPage({super.key});
 
   @override
   ConsumerState<FiltersPage> createState() => _FiltersPageState();
