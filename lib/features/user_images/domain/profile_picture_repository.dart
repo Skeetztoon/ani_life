@@ -1,3 +1,3 @@
-abstract class ProfilePictureFetcher {
+abstract class ProfilePictureRepository {
   Future<String> fetchProfilePictureUrl();
 }

@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:logging/logging.dart';
 
-class FirebaseProfilePictureFetcher implements ProfilePictureFetcher {
+class ProfilePictureRepositoryImpl implements ProfilePictureRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final Logger logger = Logger('FirebaseProfilePictureFetcher');
 
@@ -12,7 +12,7 @@ class FirebaseProfilePictureFetcher implements ProfilePictureFetcher {
   Future<String> fetchProfilePictureUrl() async {
     final currentUser = FirebaseAuth.instance.currentUser;
     DocumentSnapshot userDoc =
-    await _firestore.collection('users').doc(currentUser!.email).get();
+        await _firestore.collection('users').doc(currentUser!.email).get();
     String fileName = userDoc['profileImage'];
 
     try {

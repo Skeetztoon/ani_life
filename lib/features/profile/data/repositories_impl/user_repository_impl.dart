@@ -9,7 +9,8 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<UserModel> getUser() async {
-    final docSnapshot = await _firestore.collection("users").doc(currentUser!.email).get();
+    final docSnapshot =
+        await _firestore.collection("users").doc(currentUser!.email).get();
     final data = docSnapshot.data() as Map<String, dynamic>;
     return UserModel(
       username: data["username"] ?? "",

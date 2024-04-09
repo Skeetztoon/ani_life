@@ -67,7 +67,9 @@ class ProfileScreenContent extends ConsumerWidget {
           child: CircularProgressIndicator(),
         );
       case ProfileViewErrorState _:
-        return const Center(child: Icon(Icons.error),);
+        return const Center(
+          child: Icon(Icons.error),
+        );
       case ProfileViewDataState _:
         return CustomScrollView(
           slivers: [
@@ -79,7 +81,7 @@ class ProfileScreenContent extends ConsumerWidget {
                 background: Stack(
                   fit: StackFit.expand,
                   children: [
-                    const ProfilePicture(),
+                    ProfilePicture(state.imageUrl),
                     Positioned(
                       right: 10,
                       top: 10,
@@ -91,7 +93,7 @@ class ProfileScreenContent extends ConsumerWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const AccountSettings(),
+                                builder: (context) => AccountSettings(),
                               ),
                             );
                           },

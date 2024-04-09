@@ -47,10 +47,12 @@ dependencies:
   flutter_map_cancellable_tile_provider: ^2.0.0
   flutter_map_marker_cluster:
 
+  path: ^1.9.0
   firebase_storage: ^11.7.0
   image_picker: ^1.0.7
   image_cropper: ^5.0.1
   cached_network_image: ^3.3.1
+
 
   flutter_localizations:
     sdk: flutter

@@ -8,12 +8,13 @@ class ProfileViewLoadingState extends ProfileViewState {}
 class ProfileViewErrorState extends ProfileViewState {}
 
 class ProfileViewDataState extends ProfileViewState {
-
   ProfileViewDataState({
+    required this.imageUrl,
     required this.userDetails,
     required this.petsList,
-});
+  });
 
+  final String imageUrl;
   final UserModel userDetails;
   final List<PetModel> petsList;
 }

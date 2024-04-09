@@ -2,4 +2,5 @@ import 'package:ani_life/features/pets/data/repositories_impl/pets_list_reposito
 import 'package:ani_life/features/pets/domain/repositories/pets_list_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final petsListProvider = Provider<PetsListRepository>((ref) => PetsLitsRepositoryIml());
+final petsListProvider =
+    Provider<PetsListRepository>((ref) => PetsLitsRepositoryIml());

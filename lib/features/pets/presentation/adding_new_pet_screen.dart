@@ -45,8 +45,9 @@ class _AddingNewPetScreenState extends State<AddingNewPetScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.male),), //TODO сделать выбор пола
+                    onPressed: () {},
+                    icon: const Icon(Icons.male),
+                  ), //TODO сделать выбор пола
                   IconButton(onPressed: () {}, icon: const Icon(Icons.female)),
                 ],
               ),

@@ -1,36 +1,21 @@
 import 'dart:io';
 
-import 'package:ani_life/features/user_images/presentation/round_image.dart';
 import 'package:ani_life/main.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as storage;
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as p;
 
-class UserImage extends StatefulWidget {
-  final Function(String imageUrl) onFileChanged;
+class UserImage extends StatelessWidget {
+  const UserImage({super.key});
 
-  const UserImage({super.key, required this.onFileChanged});
-
-  @override
-  State<UserImage> createState() => _UserImageState();
-}
-
-class _UserImageState extends State<UserImage> {
-  final currentUser = FirebaseAuth.instance.currentUser;
-  final usersCollection = FirebaseFirestore.instance.collection("users");
-  final ImagePicker _picker = ImagePicker();
-
-  String? imageUrl;
-
-  Future _selectImage() async {
+  Future _selectImage(BuildContext context) async {
     // bottomSheet для выбора источника фото
     await showModalBottomSheet<dynamic>(
       isScrollControlled: true,
@@ -85,9 +70,9 @@ class _UserImageState extends State<UserImage> {
   }
 
   Future _pickImage(ImageSource source) async {
+    final ImagePicker picker = ImagePicker();
     // пикаем имаге
-    final pickedFile =
-        await _picker.pickImage(source: source, imageQuality: 50);
+    final pickedFile = await picker.pickImage(source: source, imageQuality: 50);
     if (pickedFile == null) {
       return;
     }
@@ -104,25 +89,21 @@ class _UserImageState extends State<UserImage> {
   }
 
   Future _uploadFile(String path) async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final usersCollection = FirebaseFirestore.instance.collection("users");
     // аплоадим филе
     final fileName = DateTime.now().toIso8601String() + p.basename(path);
-    final ref = storage.FirebaseStorage.instance
-        .ref()
-        .child("usersImages")
-        .child(fileName);
 
     try {
-      final result = await ref.putFile(File(path));
-      final fileUrl = await result.ref.getDownloadURL();
+      storage.FirebaseStorage.instance
+          .ref()
+          .child("usersImages")
+          .child(fileName)
+          .putFile(File(path));
+
       usersCollection
           .doc(currentUser!.email)
           .update({"profileImage": fileName});
-
-      setState(() {
-        imageUrl = fileUrl;
-      });
-
-      widget.onFileChanged(fileUrl);
     } catch (e) {
       logger.log(Level.SEVERE, e);
     }
@@ -134,23 +115,12 @@ class _UserImageState extends State<UserImage> {
       children: [
         Stack(
           children: [
-            Consumer(
-              builder: (context, ref, child) {
-                return CircleAvatar(
-                  radius: 64,
-                  child: (imageUrl == null)
-                      ?
-                  const Icon( // TODO add profileImageProvider to use as default image
-                          Icons.person,
-                          size: 65,
-                        )
-                      : RoundImage.url(
-                          imageUrl!,
-                          width: 135,
-                          height: 135,
-                        ),
-                );
-              },
+            const CircleAvatar(
+              radius: 64,
+              child: Icon(
+                Icons.person,
+                size: 65,
+              ),
             ),
             Positioned(
               bottom: -10,
@@ -172,7 +142,7 @@ class _UserImageState extends State<UserImage> {
                   color: aniColorLight,
                 ),
                 onPressed: () async {
-                  await _selectImage();
+                  await _selectImage(context);
                 },
               ),
             ),

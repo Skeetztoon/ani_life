@@ -12,7 +12,6 @@ class PetsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -34,31 +33,31 @@ class PetsList extends ConsumerWidget {
             child: pets.isEmpty
                 ? const ContainerToAddNewPet()
                 : Row(
-              children: [
-                ListView.separated(
-                  physics: const ClampingScrollPhysics(),
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: pets.length,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      width: 12,
-                    );
-                  },
-                  itemBuilder: (context, index) {
-                    return PetCard(
-                      petName: pets[index].petName,
-                      petAge: pets[index].petAge,
-                      imageColor: pets[index].imageColor,
-                    );
-                  },
-                ),
-                const SizedBox(
-                  width: 12,
-                ),
-                const ContainerToAddNewPet(),
-              ],
-            ),
+                    children: [
+                      ListView.separated(
+                        physics: const ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: pets.length,
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(
+                            width: 12,
+                          );
+                        },
+                        itemBuilder: (context, index) {
+                          return PetCard(
+                            petName: pets[index].petName,
+                            petAge: pets[index].petAge,
+                            imageColor: pets[index].imageColor,
+                          );
+                        },
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      const ContainerToAddNewPet(),
+                    ],
+                  ),
           ),
         ),
       ),
