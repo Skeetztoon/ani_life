@@ -1,17 +1,117 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:io';
 
-class NewPostWidget extends StatefulWidget {
+import 'package:ani_life/features/posts/internal/new_post_provider.dart';
+import 'package:ani_life/main.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:logging/logging.dart';
+
+final imagePathProvider = StateProvider.autoDispose<String>((ref) => "");
+
+class NewPostWidget extends ConsumerStatefulWidget {
   const NewPostWidget({super.key});
 
   @override
-  State<NewPostWidget> createState() => _NewPostWidgetState();
+  _NewPostWidgetState createState() => _NewPostWidgetState();
 }
 
-class _NewPostWidgetState extends State<NewPostWidget> {
-  final TextEditingController _textEditingController = TextEditingController();
+class _NewPostWidgetState extends ConsumerState<NewPostWidget> {
+  late TextEditingController textEditingController;
+
+  @override
+  void initState() {
+    super.initState();
+    textEditingController = TextEditingController();
+  }
+
+  Future<String?> _selectImage(BuildContext context) async {
+    final Completer<String?> completer = Completer<String?>();
+
+    await showModalBottomSheet<dynamic>(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext buildContext) {
+        return Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(25.0),
+              topRight: Radius.circular(25.0),
+            ),
+          ),
+          child: Wrap(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      child: const Column(
+                        children: [
+                          Icon(Icons.camera_alt_outlined),
+                          Text("Сделать снимок"),
+                        ],
+                      ),
+                      onTap: () async {
+                        final imagePath = await _pickImage(ImageSource.camera);
+                        Navigator.pop(context);
+                        completer.complete(imagePath);
+                      },
+                    ),
+                    GestureDetector(
+                      child: const Column(
+                        children: [
+                          Icon(Icons.filter),
+                          Text("Выбрать в галерее"),
+                        ],
+                      ),
+                      onTap: () async {
+                        final imagePath = await _pickImage(ImageSource.gallery);
+                        Navigator.pop(context);
+                        completer.complete(imagePath);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+    return completer.future;
+  }
+
+  Future<String?> _pickImage(ImageSource source) async {
+    final ImagePicker picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: source, imageQuality: 50);
+    if (pickedFile == null) {
+      return null;
+    }
+
+    final file = await ImageCropper().cropImage(
+      sourcePath: pickedFile.path,
+      aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+    );
+    if (file == null) {
+      return null;
+    }
+    logger.log(Level.FINE, "вот ваш путь к файлу: ${file.path}");
+    return file.path;
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final imagePath = ref.watch(imagePathProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Новая запись"),
@@ -21,11 +121,15 @@ class _NewPostWidgetState extends State<NewPostWidget> {
         ),
         actions: [
           IconButton(
-            onPressed: () {}, //TODO добавление записи
+            onPressed: () {
+              ref
+                  .watch(newPostProvider)
+                  .createNewPost(textEditingController.text, "asdasd");
+            },
             icon: Icon(
               Icons.check,
               size: 30,
-              color: (_textEditingController.text.isEmpty)
+              color: (textEditingController.text.isEmpty)
                   ? Colors.black26
                   : Colors.black,
             ),
@@ -34,20 +138,54 @@ class _NewPostWidgetState extends State<NewPostWidget> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Expanded(
-          child: TextField(
-            decoration: const InputDecoration(
-              hintText: "Что у вас нового?",
-              focusedBorder: InputBorder.none,
-              border: InputBorder.none,
+        child: Column(
+          children: [
+            Expanded(
+              child: TextField(
+                decoration: const InputDecoration(
+                  hintText: "Что у вас нового?",
+                  focusedBorder: InputBorder.none,
+                  border: InputBorder.none,
+                ),
+                controller: textEditingController,
+              ),
             ),
-            controller: _textEditingController,
-          ),
+            (imagePath == "")
+                ? Container()
+                : Align(
+                    alignment: Alignment.centerLeft,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: 256,
+                        minWidth: 256,
+                        maxHeight: MediaQuery.of(context).size.width,
+                        maxWidth: MediaQuery.of(context).size.width,
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Image(
+                          image: FileImage(
+                            File(
+                              imagePath,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add_a_photo_outlined),
-        onPressed: () {}, //TODO прикрепление фото
+        child: (imagePath == "")
+            ? const Icon(Icons.add_a_photo_outlined)
+            : const Icon(Icons.edit),
+        onPressed: () async {
+          final image = await _selectImage(context);
+          if (image != null) {
+            ref.read(imagePathProvider.notifier).state = image;
+          }
+        },
       ),
     );
   }
