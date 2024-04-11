@@ -120,60 +120,87 @@ class _NewPostWidgetState extends ConsumerState<NewPostWidget> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              ref
-                  .watch(newPostProvider)
-                  .createNewPost(textEditingController.text, "asdasd");
+          ValueListenableBuilder<TextEditingValue>(
+            valueListenable: textEditingController,
+            builder: (context, value, child) {
+              return IconButton(
+                onPressed: value.text.isEmpty ? null : () async {
+                  final String res = await ref
+                      .watch(newPostProvider)
+                      .createNewPost(textEditingController.text, imagePath);
+                  Navigator.of(context).pop();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(res, style: const TextStyle(color: Colors.black54),),
+                      backgroundColor: Colors.white,
+                    ),
+                  );
+                },
+                icon: Icon(
+                  Icons.check,
+                  size: 30,
+                  color: value.text.isEmpty ? Colors.black26 : Colors.black,
+                ),
+              );
             },
-            icon: Icon(
-              Icons.check,
-              size: 30,
-              color: (textEditingController.text.isEmpty)
-                  ? Colors.black26
-                  : Colors.black,
-            ),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: TextField(
-                decoration: const InputDecoration(
-                  hintText: "Что у вас нового?",
-                  focusedBorder: InputBorder.none,
-                  border: InputBorder.none,
+      body: SingleChildScrollView(
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height*0.9,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Expanded(
+                  child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    minLines: 1,
+                    maxLines: 20,
+                    decoration: const InputDecoration(
+                      hintText: "Что у вас нового?",
+                      focusedBorder: InputBorder.none,
+                      border: InputBorder.none,
+                    ),
+                    controller: textEditingController,
+                  ),
                 ),
-                controller: textEditingController,
-              ),
-            ),
-            (imagePath == "")
-                ? Container()
-                : Align(
-                    alignment: Alignment.centerLeft,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: 256,
-                        minWidth: 256,
-                        maxHeight: MediaQuery.of(context).size.width,
-                        maxWidth: MediaQuery.of(context).size.width,
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image(
-                          image: FileImage(
-                            File(
-                              imagePath,
+                (imagePath == "")
+                    ? Container()
+                    : Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Stack(
+                            children: [ConstrainedBox(
+                              constraints: BoxConstraints(
+                                // minHeight: 256,
+                                // minWidth: 256,
+                                maxHeight: MediaQuery.of(context).size.width*0.5,
+                                maxWidth: MediaQuery.of(context).size.width*0.5,
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image(
+                                  image: FileImage(
+                                    File(
+                                      imagePath,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
+                              IconButton(onPressed: (){}, icon: const Icon(Icons.cancel, color: Colors.white,),),
+                            IconButton(onPressed: (){
+                              ref.read(imagePathProvider.notifier).state = "";
+                            }, icon: const Icon(Icons.cancel_outlined, color: Colors.grey,),),]
                           ),
                         ),
                       ),
-                    ),
-                  ),
-          ],
+              ],
+            ),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
