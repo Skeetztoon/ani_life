@@ -46,7 +46,6 @@ class Authentication {
   }
 
   // SignUp the user using Email and Password
-  //TODO Регистрация и создание пользователя
   Future<void> signUpWithEmailAndPassword(
     String email,
     String password,

@@ -10,11 +10,9 @@ import 'package:firebase_storage/firebase_storage.dart' as storage;
 import 'package:path/path.dart' as p;
 
 class NewPostRepositoryImpl extends NewPostRepository {
-
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final currentUser = FirebaseAuth.instance.currentUser;
   final usersCollection = FirebaseFirestore.instance.collection("users");
-
 
   @override
   Future<String> createNewPost(String postText, String imageUrl) async {
@@ -22,7 +20,7 @@ class NewPostRepositoryImpl extends NewPostRepository {
     if (imageUrl.isEmpty) {
       fileName = "";
     } else {
-      final fileName = DateTime.now().toIso8601String() + p.basename(imageUrl);
+      fileName = DateTime.now().toIso8601String() + p.basename(imageUrl);
       try {
         storage.FirebaseStorage.instance
             .ref()
@@ -35,7 +33,7 @@ class NewPostRepositoryImpl extends NewPostRepository {
       }
     }
     var userDoc =
-    await _firestore.collection("users").doc(currentUser!.email).get();
+        await _firestore.collection("users").doc(currentUser!.email).get();
     Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
     Map<String, dynamic> postData = {
       "authorEmail": currentUser!.email,
@@ -46,7 +44,11 @@ class NewPostRepositoryImpl extends NewPostRepository {
       "postImage": fileName,
     };
     try {
-      await _firestore.collection("posts").add(postData);
+      DocumentReference post =
+          await _firestore.collection("posts").add(postData);
+      await _firestore.collection("users").doc(currentUser!.email).update({
+        'posts': FieldValue.arrayUnion([post.id]),
+      });
       return "Запись создана";
     } catch (e) {
       logger.log(Level.SEVERE, e);

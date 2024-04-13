@@ -1,18 +1,20 @@
+import 'package:ani_life/features/posts/domain/entites/post_model.dart';
 import 'package:ani_life/features/posts/presentation/new_post_screen.dart';
 import 'package:ani_life/features/posts/presentation/widgets/post_card.dart';
 import 'package:ani_life/features/posts/presentation/widgets/profile_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PostsSection extends StatefulWidget {
-  const PostsSection({super.key});
+class PostsSection extends ConsumerWidget {
+  const PostsSection(
+    this.posts, {
+    super.key,
+  });
+
+  final List<PostModel> posts;
 
   @override
-  State<PostsSection> createState() => _PostsSectionState();
-}
-
-class _PostsSectionState extends State<PostsSection> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -31,7 +33,18 @@ class _PostsSectionState extends State<PostsSection> {
               );
             },
           ),
-          const PostCard(), //TODO мои посты (через listView.builder?)
+          (posts.isEmpty)
+              ? const Text("У вас пока нет постов")
+              : ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: posts.length,
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(),
+                  itemBuilder: (context, index) {
+                    return PostCard(posts[index]);
+                  },
+                ),
         ],
       ),
     );

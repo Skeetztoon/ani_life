@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:ani_life/features/posts/internal/new_post_provider.dart';
+import 'package:ani_life/features/profile/presentation/view_model/profile_view_model.dart';
 import 'package:ani_life/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,10 +16,10 @@ class NewPostWidget extends ConsumerStatefulWidget {
   const NewPostWidget({super.key});
 
   @override
-  _NewPostWidgetState createState() => _NewPostWidgetState();
+  NewPostWidgetState createState() => NewPostWidgetState();
 }
 
-class _NewPostWidgetState extends ConsumerState<NewPostWidget> {
+class NewPostWidgetState extends ConsumerState<NewPostWidget> {
   late TextEditingController textEditingController;
 
   @override
@@ -57,7 +58,9 @@ class _NewPostWidgetState extends ConsumerState<NewPostWidget> {
                       ),
                       onTap: () async {
                         final imagePath = await _pickImage(ImageSource.camera);
-                        Navigator.pop(context);
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                        }
                         completer.complete(imagePath);
                       },
                     ),
@@ -70,7 +73,9 @@ class _NewPostWidgetState extends ConsumerState<NewPostWidget> {
                       ),
                       onTap: () async {
                         final imagePath = await _pickImage(ImageSource.gallery);
-                        Navigator.pop(context);
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                        }
                         completer.complete(imagePath);
                       },
                     ),
@@ -124,18 +129,28 @@ class _NewPostWidgetState extends ConsumerState<NewPostWidget> {
             valueListenable: textEditingController,
             builder: (context, value, child) {
               return IconButton(
-                onPressed: value.text.isEmpty ? null : () async {
-                  final String res = await ref
-                      .watch(newPostProvider)
-                      .createNewPost(textEditingController.text, imagePath);
-                  Navigator.of(context).pop();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(res, style: const TextStyle(color: Colors.black54),),
-                      backgroundColor: Colors.white,
-                    ),
-                  );
-                },
+                onPressed: value.text.isEmpty
+                    ? null
+                    : () async {
+                        final String res =
+                            await ref.watch(newPostProvider).createNewPost(
+                                  textEditingController.text,
+                                  imagePath,
+                                );
+                        ref.read(profileViewModelProvider.notifier).loadData();
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                res,
+                                style: const TextStyle(color: Colors.black54),
+                              ),
+                              backgroundColor: Colors.white,
+                            ),
+                          );
+                        }
+                      },
                 icon: Icon(
                   Icons.check,
                   size: 30,
@@ -148,7 +163,7 @@ class _NewPostWidgetState extends ConsumerState<NewPostWidget> {
       ),
       body: SingleChildScrollView(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height*0.9,
+          height: MediaQuery.of(context).size.height * 0.9,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -173,28 +188,45 @@ class _NewPostWidgetState extends ConsumerState<NewPostWidget> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Stack(
-                            children: [ConstrainedBox(
-                              constraints: BoxConstraints(
-                                // minHeight: 256,
-                                // minWidth: 256,
-                                maxHeight: MediaQuery.of(context).size.width*0.5,
-                                maxWidth: MediaQuery.of(context).size.width*0.5,
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image(
-                                  image: FileImage(
-                                    File(
-                                      imagePath,
+                            children: [
+                              ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  // minHeight: 256,
+                                  // minWidth: 256,
+                                  maxHeight:
+                                      MediaQuery.of(context).size.width * 0.5,
+                                  maxWidth:
+                                      MediaQuery.of(context).size.width * 0.5,
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: Image(
+                                    image: FileImage(
+                                      File(
+                                        imagePath,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                              IconButton(onPressed: (){}, icon: const Icon(Icons.cancel, color: Colors.white,),),
-                            IconButton(onPressed: (){
-                              ref.read(imagePathProvider.notifier).state = "";
-                            }, icon: const Icon(Icons.cancel_outlined, color: Colors.grey,),),]
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.cancel,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  ref.read(imagePathProvider.notifier).state =
+                                      "";
+                                },
+                                icon: const Icon(
+                                  Icons.cancel_outlined,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

@@ -14,7 +14,7 @@ class AccountSettings extends ConsumerWidget {
   final usersCollection = FirebaseFirestore.instance.collection("users");
 
   Future<void> editField(
-      BuildContext context, String hintTitle, String firebaseFieldName) async {
+      BuildContext context, String hintTitle, String firebaseFieldName,) async {
     String newValue = "";
     await showDialog(
       context: context,

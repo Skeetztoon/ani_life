@@ -120,8 +120,10 @@ class ProfileScreenContent extends ConsumerWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const PostsSection(),
               ]),
+            ),
+            SliverToBoxAdapter(
+              child: PostsSection(state.myPosts),
             ),
           ],
         );

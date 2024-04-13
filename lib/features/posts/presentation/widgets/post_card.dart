@@ -1,47 +1,59 @@
+import 'package:ani_life/features/posts/domain/entites/post_model.dart';
 import 'package:flutter/material.dart';
 
-class PostCard extends StatefulWidget {
-  const PostCard({super.key});
+class PostCard extends StatelessWidget {
+  const PostCard(this.postModel, {super.key});
 
-  @override
-  State<PostCard> createState() => _PostCardState();
-}
+  final PostModel postModel;
 
-class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        PostHeader(), // автор и ава
-        Divider(
+        postHeader(
+          context,
+          postModel.authorNick,
+          postModel.authorImage,
+          postModel.createdAt,
+        ), // автор и ава
+        const Divider(
           indent: 20,
           endIndent: 20,
         ),
-        PostContent(), // текст и картинка
-        PostFooter(), // кнопки
+        postContent(
+          context,
+          postModel.postText,
+          postModel.postImage,
+        ), // текст и картинка
+        postFooter(context), // кнопки
       ],
     );
   }
-}
 
-class PostHeader extends StatelessWidget {
-  // Автор и ава
-  const PostHeader({super.key});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget postHeader(
+    BuildContext context,
+    String authorName,
+    String authorImage,
+    String createdAt,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: Row(
         children: [
-          const CircleAvatar(
-            radius: 30,
-            backgroundColor: Colors.grey,
-            child: Icon(
-              Icons.pets,
-              size: 25,
-            ),
-          ),
+          (authorImage.isNotEmpty)
+              ? CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.grey,
+                  backgroundImage: NetworkImage(authorImage),
+                )
+              : const CircleAvatar(
+                  radius: 30,
+                  backgroundColor: Colors.grey,
+                  child: Icon(
+                    Icons.pets,
+                    size: 25,
+                  ),
+                ),
           const SizedBox(
             width: 15,
           ),
@@ -49,11 +61,11 @@ class PostHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Иван Иванов",
+                authorName,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               Text(
-                "Вчера 17:01",
+                createdAt, // TODO дата
                 style: Theme.of(context).textTheme.titleSmall,
               ),
               // Divider(),
@@ -63,40 +75,33 @@ class PostHeader extends StatelessWidget {
       ),
     );
   }
-}
 
-class PostContent extends StatelessWidget {
-  // текст и картинка
-  const PostContent({super.key});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget postContent(BuildContext context, String postText, String postImage) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           child: Text(
-            "Маруся устала",
+            postText,
             style: Theme.of(context).textTheme.titleSmall,
           ),
         ),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.width,
-          color: Colors.red,
-        ),
+        (postImage.isEmpty)
+            ? Container()
+            : SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.width,
+                child: Image.network(
+                  postImage,
+                  fit: BoxFit.cover,
+                ),
+              ),
       ],
     );
   }
-}
 
-class PostFooter extends StatelessWidget {
-  // кнопки
-  const PostFooter({super.key});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget postFooter(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: Row(
