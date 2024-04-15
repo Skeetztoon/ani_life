@@ -1,5 +1,5 @@
 import 'package:ani_life/features/pets/domain/entites/pet_model.dart';
-import 'package:ani_life/features/pets/presentation/adding_new_pet_screen.dart';
+import 'package:ani_life/features/pets/presentation/screens/adding_new_pet_screen.dart';
 import 'package:ani_life/features/pets/presentation/widgets/pet_card.dart';
 import 'package:ani_life/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -46,9 +46,7 @@ class PetsList extends ConsumerWidget {
                         },
                         itemBuilder: (context, index) {
                           return PetCard(
-                            petName: pets[index].petName,
-                            petAge: pets[index].petAge,
-                            imageColor: pets[index].imageColor,
+                            pet: pets[index],
                           );
                         },
                       ),

@@ -4,14 +4,14 @@ import 'package:ani_life/features/map/internal/category_notifier_provider.dart';
 import 'package:flutter/material.dart ';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FiltersPage extends ConsumerStatefulWidget {
-  const FiltersPage({super.key});
+class FiltersWidget extends ConsumerStatefulWidget {
+  const FiltersWidget({super.key});
 
   @override
-  ConsumerState<FiltersPage> createState() => _FiltersPageState();
+  ConsumerState<FiltersWidget> createState() => _FiltersPageState();
 }
 
-class _FiltersPageState extends ConsumerState<FiltersPage> {
+class _FiltersPageState extends ConsumerState<FiltersWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(

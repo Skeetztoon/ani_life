@@ -1,5 +1,4 @@
 import 'package:ani_life/features/profile/domain/entities/user_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -10,11 +9,6 @@ class ProfileDetails extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentUser = FirebaseAuth.instance.currentUser;
-    if (currentUser == null) {
-      return const Center(child: Text("User not logged in"));
-    }
-
     return Container(
       padding: const EdgeInsets.all(20),
       color: Colors.white,

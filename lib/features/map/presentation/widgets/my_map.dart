@@ -1,4 +1,4 @@
-import 'package:ani_life/core/ui_kit/filters_page.dart';
+import 'package:ani_life/features/map/presentation/widgets/filters_widget.dart';
 import 'package:ani_life/features/map/domain/place_model.dart';
 import 'package:ani_life/features/map/internal/category_list_notifier_provider.dart';
 import 'package:ani_life/features/map/internal/places_by_categories_provider.dart';
@@ -51,7 +51,9 @@ class _MyMapState extends ConsumerState<MyMap> {
           mapController: mapController,
           options: const MapOptions(
             initialCenter: LatLng(55.751244, 37.618423),
-            initialZoom: 10.2,
+            initialZoom: 10.5,
+            minZoom: 10,
+            maxZoom: 20,
             interactionOptions: InteractionOptions(
               flags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
             ),
@@ -117,7 +119,7 @@ class _MyMapState extends ConsumerState<MyMap> {
                 isScrollControlled: true,
                 context: context,
                 builder: (BuildContext context) {
-                  return const FiltersPage();
+                  return const FiltersWidget();
                 },
               );
             },

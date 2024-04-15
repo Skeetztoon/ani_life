@@ -31,8 +31,13 @@ class ProfileViewModel extends StateNotifier<ProfileViewState> {
   final PetsListRepository _petsListRepository;
   final MyPostsListRepository _myPostsRepository;
 
-  ProfileViewModel(super.state, this._imageRepository, this._repositoryUser,
-      this._petsListRepository, this._myPostsRepository,);
+  ProfileViewModel(
+    super.state,
+    this._imageRepository,
+    this._repositoryUser,
+    this._petsListRepository,
+    this._myPostsRepository,
+  );
 
   Future<void> loadData() async {
     try {

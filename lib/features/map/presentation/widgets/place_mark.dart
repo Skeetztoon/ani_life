@@ -23,7 +23,10 @@ class PlaceMark extends StatelessWidget {
       onPressed: () {
         mapController.move(markerPosition, 15.5);
         showModalBottomSheet(
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
           context: context,
+          useSafeArea: true,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(25.0),

@@ -1,13 +1,17 @@
-import 'package:flutter/material.dart';
-
 class PetModel {
   PetModel({
-    required this.petName,
-    required this.petAge,
-    this.imageColor,
+    required this.name,
+    required this.age,
+    required this.isMale,
+    required this.image,
+    required this.type,
+    required this.bio,
   });
 
-  final String petName;
-  final int petAge;
-  final Color? imageColor;
+  final String name;
+  final int age;
+  final bool isMale;
+  final String image;
+  final String type;
+  final String bio;
 }

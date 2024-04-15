@@ -2,7 +2,6 @@ import 'package:ani_life/features/pets/domain/entites/pet_model.dart';
 import 'package:ani_life/features/pets/domain/repositories/pets_list_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class PetsLitsRepositoryIml extends PetsListRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -20,10 +19,12 @@ class PetsLitsRepositoryIml extends PetsListRepository {
           await _firestore.collection('pets').doc(petId).get();
       pets.add(
         PetModel(
-          petName: petDoc['name'],
-          petAge: petDoc['age'],
-          imageColor: Colors.amber,
-        ),
+            name: petDoc['name'],
+            age: petDoc['age'],
+            isMale: petDoc['gender'],
+            image: petDoc['image'] ?? "",
+            type: petDoc['type'],
+            bio: petDoc['bio'] ?? "",),
       );
     }
 
