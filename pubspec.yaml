@@ -53,6 +53,8 @@ dependencies:
   image_cropper: ^5.0.1
   cached_network_image: ^3.3.1
 
+  smooth_page_indicator: ^1.1.0
+
 
   flutter_localizations:
     sdk: flutter
