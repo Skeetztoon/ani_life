@@ -1,8 +1,8 @@
 import 'package:ani_life/core/ui_kit/widgets/app_place_button_sheet.dart';
-import 'package:ani_life/features/map/presentation/widgets/my_map.dart';
+import 'package:ani_life/features/map/presentation/widgets/my_yandex_map.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:yandex_mapkit/yandex_mapkit.dart';
 
 class MySearchBar extends StatefulWidget {
   const MySearchBar({super.key});
@@ -127,24 +127,30 @@ class _MySearchBarState extends State<MySearchBar> {
                               .toLowerCase()
                               .startsWith(searchInput.toLowerCase())) {
                             return InkWell(
-                              onTap: () {
-                                mapController.move(
-                                  LatLng(
-                                    data["coords"][0],
-                                    data["coords"][1],
+                              onTap: () async {
+                                await mapController.moveCamera(
+                                  CameraUpdate.newCameraPosition(
+                                    CameraPosition(
+                                      target: Point(
+                                        latitude: data["coords"][0],
+                                        longitude: data["coords"][1],
+                                      ),
+                                      zoom: 15.5,
+                                    ),
                                   ),
-                                  15.5,
                                 );
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AppPlaceBottomSheet(
-                                      placeName: data["name"],
-                                      address: data["place"],
-                                      schedule: data["schedule"] ?? "",
-                                    );
-                                  },
-                                );
+                                if (context.mounted) {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AppPlaceBottomSheet(
+                                        placeName: data["name"],
+                                        address: data["place"],
+                                        schedule: data["schedule"] ?? "",
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: ListTile(
                                 title: Text(data["name"] ?? ""),

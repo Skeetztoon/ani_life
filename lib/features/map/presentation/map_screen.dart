@@ -1,6 +1,6 @@
+import 'package:ani_life/features/map/presentation/widgets/my_yandex_map.dart';
 import 'package:ani_life/features/search_bar/presentation/searchbar.dart';
 import 'package:ani_life/features/map/presentation/widgets/chips_carousel.dart';
-import 'package:ani_life/features/map/presentation/widgets/my_map.dart';
 import 'package:flutter/material.dart';
 
 class MapScreen extends StatefulWidget {
@@ -32,10 +32,20 @@ class _MapScreenState extends State<MapScreen> {
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: <Widget>[
-            const MyMap(),
+            // const Column(
+            //   children: [
+            //     MySearchBar(),
+            //     Expanded(
+            //       child:
+            //         // MyMap(),
+            //       MyYandexMap(),
+            //     ),
+            //   ],
+            // ),
+            const MyYandexMap(),
+            const Positioned(top: 0, child: MySearchBar()),
             // SelectedCategories(),
             // FetchCategories(),
-            const Positioned(top: 0, child: MySearchBar()),
             Positioned(
               bottom: 0,
               child: SizedBox(

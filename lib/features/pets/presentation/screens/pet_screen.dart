@@ -136,7 +136,10 @@ class PetScreen extends ConsumerWidget {
                             itemCount: pet.images.length,
                             controller: controller,
                             itemBuilder: (context, index) {
-                              return Image.network(pet.images[index]);
+                              return Image.network(
+                                pet.images[index],
+                                fit: BoxFit.cover,
+                              );
                             },
                           ),
                           Padding(
