@@ -12,7 +12,7 @@
    
    ![image](https://github.com/Skeetztoon/ani_life/assets/108001021/f7e8795a-5b86-40c2-94c6-fdad10b2dc9e)
 
-5. Профиль позьзователя и карточка питомца
+5. Профиль пользователя и карточка питомца
    
    ![image](https://github.com/Skeetztoon/ani_life/assets/108001021/54467674-84d7-467e-bd74-cfc212c31f90)
    ![image](https://github.com/Skeetztoon/ani_life/assets/108001021/1079323f-0b95-446b-abd0-431b480fe31e)
